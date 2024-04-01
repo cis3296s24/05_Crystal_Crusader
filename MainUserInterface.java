@@ -1,42 +1,55 @@
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.VBox;
+import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class MainUserInterface extends Application {
+
     @Override
     public void start(Stage primaryStage) {
-        // Create a Start Label object
-        Label startLabel = new Label("Start");
-        startLabel.setTextFill(Color.WHITE);
-        startLabel.setStyle("-fx-font-size: 24px;");
-        startLabel.setOnMouseClicked(e -> {
-            System.out.println("Start button clicked");
+        VBox menu = new VBox(10); // Vertical box with spacing of 10
+        menu.getStyleClass().add("menu"); // CSS class for styling
+        // Creating Title
+        Label title = new Label("Crystal Crusader");
+        title.getStyleClass().add("menu-title");
+        menu.getChildren().add(title);
+
+
+        // Creating buttons
+        Button startButton = new Button("Start");
+        startButton.getStyleClass().add("menu-button");
+        startButton.setOnAction(e -> {
+            System.out.println("Game started!");
+        });
+        // Event handler for mouse hover
+
+        Button saveButton = new Button("Save");
+        saveButton.getStyleClass().add("menu-button");
+        saveButton.setOnAction(e -> {
+            System.out.println("Game saved!");
         });
 
-        // Create a Save Label object
-        Label saveLabel = new Label("Start");
-        startLabel.setTextFill(Color.WHITE);
-        startLabel.setStyle("-fx-font-size: 24px;");
-        startLabel.setOnMouseClicked(e -> {
-            System.out.println("Save button clicked");
+        Button settingsButton = new Button("Settings");
+        settingsButton.getStyleClass().add("menu-button");
+        settingsButton.setOnAction(e -> {
+            System.out.println("Settings opened!");
         });
 
+        Button quitButton = new Button("Quit");
+        quitButton.getStyleClass().add("menu-button");
+        quitButton.setOnAction(e -> primaryStage.close()); // Close the application
 
-        StackPane root = new StackPane();
-        StackPane.setAlignment(startLabel, Pos.CENTER);
-        StackPane.setAlignment(saveLabel, Pos.CENTER);
+        // Adding buttons to the layout
+        menu.getChildren().addAll(startButton, saveButton, settingsButton, quitButton);
 
-        // Set the background color of the StackPane to black
-        root.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
-        root.getChildren().add(startLabel);
-        root.getChildren().add(saveLabel);
-        Scene scene = new Scene(root, 900, 500);
+        Scene scene = new Scene(menu, 900, 500);
+        scene.getStylesheets().add("style.css"); // Load the CSS stylesheet
 
         primaryStage.setTitle("Crystal Crusader");
         primaryStage.setScene(scene);
@@ -47,4 +60,3 @@ public class MainUserInterface extends Application {
         launch(args);
     }
 }
-
