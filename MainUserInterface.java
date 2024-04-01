@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
@@ -20,6 +21,11 @@ public class MainUserInterface extends Application {
     public void start(Stage primaryStage) {
         VBox menu = new VBox(10); // Vertical box with spacing of 10
         menu.getStyleClass().add("menu"); // CSS class for styling
+
+        // Create a Pane which allows for absolute positioning
+        Pane root = new Pane();
+        root.getChildren().add(menu); // Add the VBox to the Pane
+        root.setStyle("-fx-background-color: black;");// Set the background color of the Pane
         // Initialize the triangle and animation
         initTriangles();
 
@@ -52,9 +58,16 @@ public class MainUserInterface extends Application {
         quitButton.setOnAction(e -> primaryStage.close()); // Close the application
 
         // Adding buttons to the layout
-        menu.getChildren().addAll(startButton, saveButton, settingsButton, quitButton, triangleLeft, triangleRight);
+        menu.getChildren().addAll(startButton, saveButton, settingsButton, quitButton);
 
-        Scene scene = new Scene(menu, 900, 500);
+        // Add the triangles to the Pane for absolute positioning
+        root.getChildren().add(triangleLeft);
+        root.getChildren().add(triangleRight);
+
+        menu.setLayoutX(300 - menu.getWidth() / 2); // You may need to adjust this value
+        menu.setLayoutY(100 - menu.getHeight() / 2); // You may need to adjust this value
+
+        Scene scene = new Scene(root, 900, 500);
         scene.getStylesheets().add("style.css"); // Load the CSS stylesheet
 
         primaryStage.setTitle("Crystal Crusader");
@@ -87,24 +100,14 @@ public class MainUserInterface extends Application {
         Button button = new Button(text);
 
         button.setOnMouseEntered(e -> {
-            // Get the position of the VBox in the scene to offset the triangle positions
-            double menuX = menu.localToScene(menu.getBoundsInLocal()).getMinX();
-            double menuY = menu.localToScene(menu.getBoundsInLocal()).getMinY();
+            double yPos = button.getLayoutY() + button.getHeight() / 2 + menu.getLayoutY();
 
-            // Calculate the Y position common for both triangles (centered vertically on the button)
-            double yPos = menuY + button.getLayoutY() + button.getHeight() / 2;
+            triangleLeft.setLayoutY(yPos - triangleLeft.getLayoutBounds().getHeight() / 2);
+            triangleLeft.setLayoutX(menu.getLayoutX() + button.getLayoutX() - triangleLeft.getLayoutBounds().getWidth() - 3);
 
-            // Set the positions for the left triangle
-            triangleLeft.setLayoutY(yPos);
-            // Align it to the left of the button, adjusting by its width and some padding
-            triangleLeft.setLayoutX(menuX + button.getLayoutX() - triangleLeft.getLayoutBounds().getWidth() - 5);
+            triangleRight.setLayoutY(yPos - triangleRight.getLayoutBounds().getHeight() / 2);
+            triangleRight.setLayoutX(menu.getLayoutX() + button.getLayoutX() + button.getWidth() + 5);
 
-            // Set the positions for the right triangle
-            triangleRight.setLayoutY(yPos);
-            // Align it to the right of the button, adjusting by some padding
-            triangleRight.setLayoutX(menuX + button.getLayoutX() + button.getWidth() + 5);
-
-            // Make the triangles visible and start the blinking animation
             triangleLeft.setOpacity(1);
             triangleRight.setOpacity(1);
             blinkAnimation.play();
