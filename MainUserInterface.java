@@ -27,7 +27,6 @@ public class MainUserInterface extends Application {
         startButton.setOnAction(e -> {
             System.out.println("Game started!");
         });
-        // Event handler for mouse hover
 
         Button saveButton = new Button("Save");
         saveButton.getStyleClass().add("menu-button");
