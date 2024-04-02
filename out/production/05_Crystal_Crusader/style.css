@@ -1,0 +1,26 @@
+.menu {
+    -fx-background-color: black;
+    -fx-padding: 20;
+    -fx-alignment: center;
+}
+
+.menu-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-font-family: "Lucida Handwriting", cursive;
+    -fx-padding: 10;
+
+
+}
+
+.menu-button {
+    -fx-background-color: black;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 10 20;
+    -fx-border-color: black;
+    -fx-border-style: solid;
+    -fx-border-width: 2;
+}
