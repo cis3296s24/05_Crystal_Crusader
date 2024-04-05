@@ -1,28 +1,24 @@
-# Project Name
-Put here a short paragraph describing your project. 
-Adding an screenshot or a mockup of your application in action would be nice.  
+# Crystal Crusader 
+"Crystal Crusader" is all about creating your own hero, taking on enemies,finding unique items and diving into a world where crystals are powerful artifacts. If you're into strategic fights and stories where your choices matter, this is the game for you.
+(we can add the relevant screenshot here later).
 
-![This is a screenshot.](images.png)
-# How to run
-Provide here instructions on how to use your application.   
+![This is a screenshot.](MainPage.png)
+# How to run (IntelliJ IDEA)
 - Download the latest binary from the Release section on the right on GitHub.  
-- On the command line uncompress using
-```
-tar -xzf  
-```
-- On the command line run with
-```
-./hello
-```
-- You will see Hello World! on your terminal. 
+- Open https://gluonhq.com/products/javafx/, download the JavaFX SDK and unzip it to a location on your computer. (Also unzip lib folder from the zip file if necessary)
+- Open the project in IntelliJ IDEA and go to File -> Project Structure -> Libraries. Click on the + sign and add the path to the lib folder in the JavaFX SDK folder. Click Apply and then OK.
+- Go to Run -> Edit Configurations. Click on the + sign and add a new Application configuration. Set the Main class to be Main and set the VM options to --module-path "path to JavaFX lib folder" --add-modules javafx.controls,javafx.fxml. Click Apply and then OK.(Remember to replace "path to JavaFX lib folder" with the actual path to the lib folder in the JavaFX SDK folder)
+- Run the MainUserInterface class.
+
 
 # How to contribute
-Follow this project board to know the latest status of the project: [http://...]([http://...])  
+Follow this project board to know the latest status of the project: https://github.com/orgs/cis3296s24/projects/80
 
 ### How to build
-- Use this github repository: ... 
-- Specify what branch to use for a more stable release or for cutting edge development.  
-- Use InteliJ 11
-- Specify additional library to download if needed 
-- What file and target to compile and run. 
-- What is expected to happen when the app start. 
+- Get the code from the repo: https://github.com/cis3296s24/05_Crystal_Crusader.git.
+- Use the 'main' branch for a more stable release or development.
+- Use InteliJ 11 
+- Open up your IDE, build the Main class
+- Compile and run.
+- What is expected to happen when the app start (need to ask)
+
