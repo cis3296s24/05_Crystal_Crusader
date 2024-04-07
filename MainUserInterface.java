@@ -38,8 +38,13 @@ public class MainUserInterface extends Application {
         Button startButton = createButton("Start", menu);
         startButton.getStyleClass().add("menu-button");
         startButton.setOnAction(e -> {
+            GamePage gamePage = new GamePage(); // Create an instance of GamePage
+            Scene gameScene = new Scene(gamePage.getRootPane(), 900, 500); // Use the GamePage's root pane
+            primaryStage.setScene(gameScene); // Switch to the game scene
             System.out.println("Game started!");
         });
+
+
 
         Button saveButton = createButton("Save", menu);
         saveButton.getStyleClass().add("menu-button");
