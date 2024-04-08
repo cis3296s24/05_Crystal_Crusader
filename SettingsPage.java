@@ -1,4 +1,5 @@
 import javafx.collections.FXCollections;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -7,7 +8,11 @@ import javafx.stage.Stage;
 
 public class SettingsPage {
     private Pane rootPane;
+    private Stage primaryStage;
+    private MainUserInterface mainApp;
     public SettingsPage(Stage primaryStage, MainUserInterface mainApp) {
+        this.primaryStage = primaryStage;
+        this.mainApp = mainApp;
         setupSettingsPage(primaryStage, mainApp);
     }
 
@@ -20,6 +25,8 @@ public class SettingsPage {
         ComboBox<String> resolutionComboBox = createComboBox();
         resolutionComboBox.getSelectionModel().select("800 x 600");
         Button quitButton = new Button("Quit");
+       // quitButton.getStyleClass().add("settings-button");
+
 
         // Create a CheckBox for toggling full screen mode
         CheckBox fullScreenCheckBox = createCheckBox(primaryStage);
@@ -43,9 +50,11 @@ public class SettingsPage {
         quitButton.setOnAction(e ->{ 
             mainApp.switchToMainPage();
         });
+
         rootPane.getChildren().add(resolutionComboBox);
         rootPane.getChildren().add(fullScreenCheckBox);
         rootPane.getChildren().add(quitButton);
+
     }
 
     private static CheckBox createCheckBox(Stage primaryStage) {
@@ -76,6 +85,8 @@ public class SettingsPage {
 
 
     public Pane getRootPane() {
+        Pane newRootPane = new Pane();
+        setupSettingsPage(primaryStage, mainApp);
         return rootPane;
     }
 }

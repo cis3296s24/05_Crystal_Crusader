@@ -62,6 +62,7 @@ public class MainUserInterface extends Application implements SettingsCallback {
         saveButton.setOnAction(e -> System.out.println("Game saved!"));
 
         settingsButton.setOnAction(e -> {
+
             SettingsPage settingsPage = new SettingsPage(primaryStage, this); // 'this' refers to an instance of MainUserInterface
             Scene settingsScene = new Scene(settingsPage.getRootPane(), 800, 600); // Create a scene with the settings page, size can be adjusted
             primaryStage.setScene(settingsScene); // Apply the settings scene to the primary stage
