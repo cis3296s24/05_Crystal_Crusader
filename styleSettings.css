@@ -1,10 +1,5 @@
-.menu {
-    -fx-background-color: black;
-    -fx-padding: 20;
-    -fx-alignment: center;
-}
 
-.menu-title {
+.settings-title {
     -fx-font-size: 24px;
     -fx-font-weight: bold;
     -fx-text-fill: white;
@@ -14,7 +9,7 @@
 
 }
 
-.menu-button {
+.settings-button {
     -fx-background-color: black;
     -fx-text-fill: white;
     -fx-font-size: 14px;
