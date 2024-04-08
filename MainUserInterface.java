@@ -11,7 +11,7 @@ import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class MainUserInterface extends Application implements PageSwitcher {
+public class MainUserInterface extends Application implements SettingsCallback {
     // Define the triangle and blink animation globally so they can be used in the setupButton method
     Polygon triangleLeft;
     Polygon triangleRight;
@@ -53,7 +53,7 @@ public class MainUserInterface extends Application implements PageSwitcher {
 
         // Define actions for buttons
         startButton.setOnAction(e -> {
-            GamePage gamePage = new GamePage(); // Create an instance of GamePage
+            GamePage gamePage = new GamePage(this); // Create an instance of GamePage
             Scene gameScene = new Scene(gamePage.getRootPane(), 800, 600); // Use the GamePage's root pane
             primaryStage.setScene(gameScene); // Switch to the game scene
             System.out.println("Game started!");

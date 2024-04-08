@@ -7,13 +7,13 @@ import javafx.scene.paint.Color;
 public class GamePage {
     private Pane rootPane;
 
-    public GamePage() {
-        setupGamePage();
+    public GamePage(MainUserInterface mainApp) {
+        setupGamePage(mainApp);
     }
 
-    private void setupGamePage() {
+    private void setupGamePage(MainUserInterface mainApp) {
         rootPane = new Pane();
-        rootPane.setStyle("-fx-background-color: #333;"); // Set background color
+        rootPane.setStyle("-fx-background-color: black;"); // Set background color
 
         // Output label
         Label outputLabel = new Label("Game Output");
@@ -36,7 +36,17 @@ public class GamePage {
             outputLabel.setText("You entered: " + inputText);
         });
 
-        rootPane.getChildren().addAll(outputLabel, inputField, submitButton);
+        // Quit button
+        Button quitButton = new Button("Quit");
+        quitButton.setLayoutX(100);
+        quitButton.setLayoutY(200);
+        quitButton.setOnAction(event -> {
+            // Quit the game
+            mainApp.switchToMainPage();
+        });
+
+
+        rootPane.getChildren().addAll(outputLabel, inputField, submitButton, quitButton);
     }
 
     public Pane getRootPane() {
