@@ -35,9 +35,8 @@ public class SettingsPage {
         });
 
         // Add an action listener to the checkbox
-        fullScreenCheckBox.setOnAction(e -> {
-            primaryStage.setFullScreen(fullScreenCheckBox.isSelected());
-        });
+        fullScreenCheckBox.setSelected(primaryStage.isFullScreen());
+        fullScreenCheckBox.setOnAction(e -> mainApp.setFullScreen(fullScreenCheckBox.isSelected()));
 
         quitButton.setLayoutX(50);
         quitButton.setLayoutY(200);

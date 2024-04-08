@@ -91,7 +91,7 @@ public class MainUserInterface extends Application implements SettingsCallback {
 
 
         // Setup and show the main scene
-        this.mainPageRoot = setupMainPage(); // This method sets up your main page UI, adjust if this needs to be integrated into your setup
+        this.mainPageRoot = setupMainPage();
         this.mainScene = new Scene(root, 800, 600); // Initialize mainScene with root
         this.mainScene.getStylesheets().add("style.css"); // Load the CSS stylesheet
         primaryStage.setTitle("Crystal Crusader");
@@ -150,7 +150,11 @@ public class MainUserInterface extends Application implements SettingsCallback {
     public void switchToMainPage() {
         primaryStage.setScene(mainScene); // Switch back to the main scene
     }
-
+    @Override
+    public void setFullScreen(boolean fullScreen) {
+        System.out.println("Full screen requested: " + fullScreen);
+        primaryStage.setFullScreen(fullScreen);// TODO: Needs to be fixed
+    }
     private Pane setupMainPage() {
         // Set up your main page layout here and return the root pane
         Pane rootPane = new Pane();
