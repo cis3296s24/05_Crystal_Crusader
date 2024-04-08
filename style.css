@@ -19,8 +19,8 @@
     -fx-text-fill: white;
     -fx-font-size: 14px;
     -fx-font-weight: bold;
-    -fx-padding: 10 20;
+    -fx-padding: 15 20;
     -fx-border-color: black;
     -fx-border-style: solid;
-    -fx-border-width: 2;
+    -fx-border-width: 0;
 }
