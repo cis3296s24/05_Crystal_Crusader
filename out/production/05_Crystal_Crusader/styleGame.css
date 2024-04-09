@@ -1,10 +1,6 @@
-.menu {
-    -fx-background-color: black;
-    -fx-padding: 20;
-    -fx-alignment: center;
-}
 
-.menu-title {
+
+.game-title {
     -fx-font-size: 24px;
     -fx-font-weight: bold;
     -fx-text-fill: white;
@@ -14,7 +10,7 @@
 
 }
 
-.menu-button {
+.game-button {
     -fx-background-color: black;
     -fx-text-fill: white;
     -fx-font-size: 14px;
