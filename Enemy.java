@@ -22,8 +22,9 @@ public class Enemy{
     private int xpWorth;
     private List<String> itemDrops;
     boolean isDefeated;
+    boolean isBoss;
 
-    public Enemy(String name, int maxHealth, int attack, int defense, int speed, int xpWorth, List<String> itemDrops){
+    public Enemy(String name, int maxHealth, int attack, int defense, int speed, int xpWorth, List<String> itemDrops, boolean isBoss){
         this.name = name;
         this.maxHealth = maxHealth;
         this.currentHealth = this.maxHealth;
@@ -33,6 +34,7 @@ public class Enemy{
         this.xpWorth = xpWorth;
         this.itemDrops = itemDrops;
         this.isDefeated = false;
+        this.isBoss = isBoss;
     }
 
     public String getName(){
@@ -67,7 +69,7 @@ public class Enemy{
         return itemDrops;
     }
 
-    public boolean checkIfDeafeated(){
+    public boolean checkIfDefeated(){
         return isDefeated;
     }
 
