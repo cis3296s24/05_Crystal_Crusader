@@ -23,7 +23,12 @@ public class Enemy{
     private List<String> itemDrops;
     boolean isDefeated;
 
-    public Enemy(String name, int maxHealth, int attack, int defense, int speed, int xpWorth, List<String> itemDrops){
+    //adding var for damage and physical/magical resistance attributes
+    private int damage;
+    private int physicalResistance;
+    private int magicalResistance;
+
+    public Enemy(String name, int maxHealth, int attack, int defense, int speed, int xpWorth, List<String> itemDrops, int damage){
         this.name = name;
         this.maxHealth = maxHealth;
         this.currentHealth = this.maxHealth;
@@ -32,7 +37,23 @@ public class Enemy{
         this.speed = speed;
         this.xpWorth = xpWorth;
         this.itemDrops = itemDrops;
+        this.damage = damage; //(adding damage stat)
         this.isDefeated = false;
+
+
+    }
+
+    public int attack(PlayerObject player) {
+        //how much damage enemy can do
+        int baseDamage= this.damage;
+        //to make attack random
+        int variability = (int) (Math.random() * 20 + 1); //example number for now (1-20 for variability)
+        int adjustedDamage = baseDamage * variability / 20;
+
+
+        //resume function here later
+
+        return 0; //for now (change it later)
     }
 
     public String getName(){
