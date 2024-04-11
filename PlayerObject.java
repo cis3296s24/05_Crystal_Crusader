@@ -1,12 +1,18 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+import java.util.Random;
 
 
 public class PlayerObject {
     private String name;
     private int healthPoints;
+    private int attack;
+    private int defense;
+    private int speed;
     private int skillPoints;
-    private List<String> itemsFound;
+    private Item equippedWeapon;
+    private List<Item> inventory;
 
 
     public PlayerObject(String name) {
@@ -52,5 +58,79 @@ public class PlayerObject {
         this.skillPoints = skillPoints;
     }
 
+    public void battle(Enemy enemy){
+        System.out.println("A " + enemy.getName() + " appears!!");
+        Random rand = new Random();
+        Scanner scan = new Scanner(System.in);
+        boolean battleOver = false;
+        while(!battleOver){
+            if(this.speed >= enemy.getSpeed()){
+                
+                //player turn
 
+                int playerChoice = 0;
+                while(playerChoice != 1 && playerChoice != 2 && playerChoice != 3){
+                    System.out.println("What will you do?");
+                    System.out.println("1: Attack");
+                    System.out.println("2: Item");
+                    System.out.println("3: Run");
+                    playerChoice = scan.nextInt();
+                    double chance;
+                    switch(playerChoice){
+                        case 1:
+                            System.out.println("You attack with your " + equippedWeapon.getName() + "!");
+                            int enemyDefense = enemy.getDefense();
+                            chance = rand.nextInt(19);
+                            chance++;
+                            if(attack >= enemyDefense * 2){
+                                chance += 4;
+                            }else if (attack > enemyDefense){
+                                chance += 2;
+                            }else if(attack <= enemyDefense / 2){
+                                chance -= 4;
+                            }else if(attack < enemyDefense){
+                                chance -= 2;
+                            }
+                            double attackPercent = chance / 20.0;
+                            double damage = attackPercent * equippedWeapon.getAttackPwr();
+                            int convertedDamage = (int) damage;
+                            System.out.println("You did " + convertedDamage + " damage!!");
+                            enemy.takeDamage(convertedDamage);
+                            if(enemy.checkIfDefeated()){
+                                battleOver = true;
+                            }
+                        case 2:
+
+                        case 3:
+                            if(enemy.isBoss){
+                                System.out.println("You can't run from this fight.");
+                                playerChoice = 0;
+                            }else{
+                                System.out.println("You try to run away!!");
+                                chance = rand.nextInt(1);
+                                if(chance == 1){
+                                    System.out.println("You got away!!");
+                                    battleOver = true;
+                                }else{
+                                    System.out.println("You couldn't get away!!");
+                                }
+                            }
+                            break;
+                        default:
+                            System.out.println("Thats not an option!");
+                            break;
+                    }
+                }
+
+                //enemy turn
+
+            }else{
+
+            }
+        }
+    }
+
+    public List<Item> getBattleItems(){
+        
+    }
 }

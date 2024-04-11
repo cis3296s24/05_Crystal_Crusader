@@ -22,13 +22,15 @@ public class Enemy{
     private int xpWorth;
     private List<String> itemDrops;
     boolean isDefeated;
+    boolean isBoss;
+
 
     //adding var for damage and physical/magical resistance attributes
     private int damage;
     private int physicalResistance;
     private int magicalResistance;
-
-    public Enemy(String name, int maxHealth, int attack, int defense, int speed, int xpWorth, List<String> itemDrops, int damage){
+  
+    public Enemy(String name, int maxHealth, int attack, int defense, int speed, int xpWorth, List<String> itemDrops, int damage, boolean isBoss){
         this.name = name;
         this.maxHealth = maxHealth;
         this.currentHealth = this.maxHealth;
@@ -39,8 +41,7 @@ public class Enemy{
         this.itemDrops = itemDrops;
         this.damage = damage; //(adding damage stat)
         this.isDefeated = false;
-
-
+        this.isBoss = isBoss;
     }
 
     public int attack(PlayerObject player) {
@@ -88,7 +89,7 @@ public class Enemy{
         return itemDrops;
     }
 
-    public boolean checkIfDeafeated(){
+    public boolean checkIfDefeated(){
         return isDefeated;
     }
 
