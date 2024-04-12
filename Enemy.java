@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /*
@@ -30,7 +32,8 @@ public class Enemy{
     private int physicalResistance;
     private int magicalResistance;
   
-    public Enemy(String name, int maxHealth, int attack, int defense, int speed, int xpWorth, List<String> itemDrops, int damage, boolean isBoss){
+    public Enemy(String name, int maxHealth, int attack, int defense, int speed, int damage, int xpWorth, boolean isDefeated, List<String> itemDrops){
+
         this.name = name;
         this.maxHealth = maxHealth;
         this.currentHealth = this.maxHealth;
@@ -40,8 +43,8 @@ public class Enemy{
         this.xpWorth = xpWorth;
         this.itemDrops = itemDrops;
         this.damage = damage; //(adding damage stat)
-        this.isDefeated = false;
-        this.isBoss = isBoss;
+        this.isDefeated = isDefeated;
+        //this.isBoss = isBoss;
     }
 
     public int attack(PlayerObject player) {
@@ -130,4 +133,26 @@ public class Enemy{
     public void lowerSpeed(int amount){
         speed -= amount;
     }
+
+    public static List<Enemy> initializeEnemies() {
+        List<Enemy> enemies = new ArrayList<>();
+
+        // Note: These values are only temporary placeholders only. I will fix it later
+        // Note: The 'false' parameter is for the 'isBoss' boolean flag.
+        enemies.add(new Enemy("Goblin", 30, 10, 5, 2, 15, 10, false, Arrays.asList("gold coin", "small dagger")));
+        enemies.add(new Enemy("Zombie", 50, 8, 10, 1, 10, 20, false, Arrays.asList("rotten flesh", "bone")));
+        enemies.add(new Enemy("Skeleton", 40, 12, 8, 3, 12, 15, false, Arrays.asList("bone", "rusty sword")));
+        enemies.add(new Enemy("Dragon", 100, 20, 15, 5, 30, 50, false, Arrays.asList("dragon scale", "treasure")));
+
+        return enemies;
+    }
+
+    @Override
+
+    //to display name and stats
+    public String toString() {
+        return name + ": Health=" + currentHealth + ", Attack=" + attack + ", Defense=" + defense +
+                ", Speed=" + speed + ", Damage=" + damage + ", XP=" + xpWorth + ", Drops=" + itemDrops;
+    }
 }
+
