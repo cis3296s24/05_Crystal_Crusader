@@ -20,7 +20,7 @@ public class Enemy{
     private int defense;
     private int speed;
     private int xpWorth;
-    private List<String> itemDrops;
+    private List<Item> itemDrops;
     boolean isDefeated;
     boolean isBoss;
 
@@ -30,7 +30,7 @@ public class Enemy{
     private int physicalResistance;
     private int magicalResistance;
   
-    public Enemy(String name, int maxHealth, int attack, int defense, int speed, int xpWorth, List<String> itemDrops, int damage, boolean isBoss){
+    public Enemy(String name, int maxHealth, int attack, int defense, int speed, int xpWorth, List<Item> itemDrops, int damage, boolean isBoss){
         this.name = name;
         this.maxHealth = maxHealth;
         this.currentHealth = this.maxHealth;
@@ -49,12 +49,17 @@ public class Enemy{
         int baseDamage= this.damage;
         //to make attack random
         int variability = (int) (Math.random() * 20 + 1); //example number for now (1-20 for variability)
+        if(attack >= player.getDefense() * 2){
+            variability += 4;
+        }else if (attack > player.getDefense()){
+            variability += 2;
+        }else if(attack <= player.getDefense() / 2){
+            variability -= 4;
+        }else if(attack < player.getDefense()){
+            variability -= 2;
+        }
         int adjustedDamage = baseDamage * variability / 20;
-
-
-        //resume function here later
-
-        return 0; //for now (change it later)
+        return adjustedDamage; //for now (change it later)
     }
 
     public String getName(){
@@ -85,7 +90,7 @@ public class Enemy{
         return xpWorth;
     }
 
-    public List<String> getItemDrops(){
+    public List<Item> getItemDrops(){
         return itemDrops;
     }
 
@@ -129,5 +134,9 @@ public class Enemy{
 
     public void lowerSpeed(int amount){
         speed -= amount;
+    }
+
+    public int getDamage(){
+        return damage;
     }
 }

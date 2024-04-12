@@ -65,4 +65,10 @@ public class Item {
     public List<String> getAbilities() {
         return abilities;
     }
+
+    public void use(PlayerObject player, Enemy enemy){
+        //have a series of if() statements checking the name of the item and doing the effect for that one
+        //is passed the player and enemy in the fight so it can manipulate their stats if needed
+        //(Example: healing, raising attack, defense, or speed, etc)
+    }
 }
