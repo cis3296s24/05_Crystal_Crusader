@@ -11,69 +11,95 @@ import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class MainUserInterface extends Application {
+public class MainUserInterface extends Application implements SettingsCallback {
     // Define the triangle and blink animation globally so they can be used in the setupButton method
     Polygon triangleLeft;
     Polygon triangleRight;
 
     Timeline blinkAnimation;
+    private Pane mainPageRoot;
+    private Scene mainScene;
+    private Stage primaryStage;
     @Override
     public void start(Stage primaryStage) {
-        VBox menu = new VBox(10); // Vertical box with spacing of 10
-        menu.getStyleClass().add("menu"); // CSS class for styling
+        this.primaryStage = primaryStage;
 
         // Create a Pane which allows for absolute positioning
         Pane root = new Pane();
-        root.getChildren().add(menu); // Add the VBox to the Pane
-        root.setStyle("-fx-background-color: black;");// Set the background color of the Pane
+        root.setStyle("-fx-background-color: black;"); // Set the background color of the Pane
+
         // Initialize the triangle and animation
         initTriangles();
+
+        VBox menu = new VBox(10); // Vertical box with spacing of 10
+        menu.getStyleClass().add("menu"); // CSS class for styling
+        root.getChildren().add(menu); // Add the VBox to the Pane
 
         // Creating Title
         Label title = new Label("Crystal Crusader");
         title.getStyleClass().add("menu-title");
         menu.getChildren().add(title);
 
-        // Creating buttons
-        Button startButton = createButton("Start", menu);
+        // Creating buttons and adding them to the menu
+        Button startButton = createButton("Start ", menu);
         startButton.getStyleClass().add("menu-button");
+        Button saveButton = createButton("Save ", menu);
+        saveButton.getStyleClass().add("menu-button");
+        Button settingsButton = createButton("Settings ", menu);
+        settingsButton.getStyleClass().add("menu-button");
+        Button quitButton = createButton("Quit ", menu);
+        quitButton.getStyleClass().add("menu-button");
+        menu.getChildren().addAll(startButton, saveButton, settingsButton, quitButton);
+
+        // Define actions for buttons
         startButton.setOnAction(e -> {
+            GamePage gamePage = new GamePage(this); // Create an instance of GamePage
+            Scene gameScene = new Scene(gamePage.getRootPane(), 800, 600); // Use the GamePage's root pane
+            primaryStage.setScene(gameScene); // Switch to the game scene
             System.out.println("Game started!");
         });
 
-        Button saveButton = createButton("Save", menu);
-        saveButton.getStyleClass().add("menu-button");
-        saveButton.setOnAction(e -> {
-            System.out.println("Game saved!");
-        });
+        saveButton.setOnAction(e -> System.out.println("Game saved!"));
 
-        Button settingsButton = createButton("Settings", menu);
-        settingsButton.getStyleClass().add("menu-button");
         settingsButton.setOnAction(e -> {
+
+            SettingsPage settingsPage = new SettingsPage(primaryStage, this); // 'this' refers to an instance of MainUserInterface
+            Scene settingsScene = new Scene(settingsPage.getRootPane(), 800, 600); // Create a scene with the settings page, size can be adjusted
+            primaryStage.setScene(settingsScene); // Apply the settings scene to the primary stage
             System.out.println("Settings opened!");
         });
 
-        Button quitButton = createButton("Quit", menu);
-        quitButton.getStyleClass().add("menu-button");
         quitButton.setOnAction(e -> primaryStage.close()); // Close the application
 
-        // Adding buttons to the layout
-        menu.getChildren().addAll(startButton, saveButton, settingsButton, quitButton);
-
         // Add the triangles to the Pane for absolute positioning
-        root.getChildren().add(triangleLeft);
-        root.getChildren().add(triangleRight);
+        root.getChildren().addAll(triangleLeft, triangleRight);
+        root.widthProperty().addListener((obs, oldVal, newVal) -> {
+            // Center menu horizontally
+            menu.setLayoutX((newVal.doubleValue() - menu.getWidth()) / 2);
+        });
+        root.heightProperty().addListener((obs, oldVal, newVal) -> {
+            // Center menu vertically
+            menu.setLayoutY((newVal.doubleValue() - menu.getHeight()) / 2);
+        });
+        menu.widthProperty().addListener((obs, oldVal, newVal) -> {
+            // Adjust menu position if its width changes
+            menu.setLayoutX((root.getWidth() - newVal.doubleValue()) / 2);
+        });
+        menu.heightProperty().addListener((obs, oldVal, newVal) -> {
+            // Adjust menu position if its height changes
+            menu.setLayoutY((root.getHeight() - newVal.doubleValue()) / 2);
+        });
 
-        menu.setLayoutX(300 - menu.getWidth() / 2); // You may need to adjust this value
-        menu.setLayoutY(100 - menu.getHeight() / 2); // You may need to adjust this value
 
-        Scene scene = new Scene(root, 900, 500);
-        scene.getStylesheets().add("style.css"); // Load the CSS stylesheet
-
+        // Setup and show the main scene
+        this.mainPageRoot = setupMainPage();
+        this.mainScene = new Scene(root, 800, 600); // Initialize mainScene with root
+        this.mainScene.getStylesheets().add("style.css"); // Load the CSS stylesheet
         primaryStage.setTitle("Crystal Crusader");
-        primaryStage.setScene(scene);
+        primaryStage.setScene(this.mainScene);
         primaryStage.show();
     }
+
     private void initTriangles() {
         triangleLeft = new Polygon(0.0, 0.0, 10.0, 5.0, 0.0, 10.0);
         triangleLeft.setFill(Color.WHITE);
@@ -121,7 +147,21 @@ public class MainUserInterface extends Application {
         });
         return button;
     }
-
+    @Override
+    public void switchToMainPage() {
+        primaryStage.setScene(mainScene); // Switch back to the main scene
+    }
+    @Override
+    public void setFullScreen(boolean fullScreen) {
+        System.out.println("Full screen requested: " + fullScreen);
+        primaryStage.setFullScreen(fullScreen);// TODO: Needs to be fixed
+    }
+    private Pane setupMainPage() {
+        // Set up your main page layout here and return the root pane
+        Pane rootPane = new Pane();
+        // Your main page setup...
+        return rootPane;
+    }
     public static void main(String[] args) {
         launch(args);
     }
