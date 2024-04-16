@@ -14,7 +14,7 @@ Ideas to maybe add later:
      their weapon, etc.)
 */
 
-public class Enemy{
+public class Enemy {
     private String name;
     private int maxHealth;
     private int currentHealth;
@@ -31,9 +31,9 @@ public class Enemy{
     private int damage;
     private int physicalResistance;
     private int magicalResistance;
-  
 
-    public Enemy(String name, int maxHealth, int attack, int defense, int speed, int damage, int xpWorth, boolean isDefeated, List<Item> itemDrops, boolean isBoss){
+
+    public Enemy(String name, int maxHealth, int attack, int defense, int speed, int damage, int xpWorth, boolean isDefeated, List<Item> itemDrops, boolean isBoss) {
         this.name = name;
         this.maxHealth = maxHealth;
         this.currentHealth = this.maxHealth;
@@ -49,109 +49,109 @@ public class Enemy{
 
     public int attack(PlayerObject player) {
         //how much damage enemy can do
-        int baseDamage= this.damage;
+        int baseDamage = this.damage;
         //to make attack random
         int variability = (int) (Math.random() * 20 + 1); //example number for now (1-20 for variability)
-        if(attack >= player.getDefense() * 2){
+        if (attack >= player.getDefense() * 2) {
             variability += 4;
-        }else if (attack > player.getDefense()){
+        } else if (attack > player.getDefense()) {
             variability += 2;
-        }else if(attack <= player.getDefense() / 2){
+        } else if (attack <= player.getDefense() / 2) {
             variability -= 4;
-        }else if(attack < player.getDefense()){
+        } else if (attack < player.getDefense()) {
             variability -= 2;
         }
         int adjustedDamage = baseDamage * variability / 20;
         return adjustedDamage; //for now (change it later)
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
-    public int getMaxHealth(){
+    public int getMaxHealth() {
         return maxHealth;
     }
 
-    public int getCurrentHealth(){
+    public int getCurrentHealth() {
         return currentHealth;
     }
 
-    public int getAttack(){
+    public int getAttack() {
         return attack;
     }
 
-    public int getDefense(){
+    public int getDefense() {
         return defense;
     }
 
-    public int getSpeed(){
+    public int getSpeed() {
         return speed;
     }
 
-    public int getXpWorth(){
+    public int getXpWorth() {
         return xpWorth;
     }
 
-    public List<Item> getItemDrops(){
+    public List<Item> getItemDrops() {
         return itemDrops;
     }
 
-    public boolean checkIfDefeated(){
+    public boolean checkIfDefeated() {
         return isDefeated;
     }
 
-    public void takeDamage(int damage){
+    public void takeDamage(int damage) {
         currentHealth -= damage;
-        if(currentHealth <= 0){
+        if (currentHealth <= 0) {
             isDefeated = true;
         }
     }
 
-    public void heal(int heal){
+    public void heal(int heal) {
         currentHealth += heal;
-        if(currentHealth > maxHealth){
+        if (currentHealth > maxHealth) {
             currentHealth = maxHealth;
         }
     }
 
-    public void raiseAttack(int amount){
+    public void raiseAttack(int amount) {
         attack += amount;
     }
 
-    public void raiseDefense(int amount){
+    public void raiseDefense(int amount) {
         defense += amount;
     }
 
-    public void raiseSpeed(int amount){
+    public void raiseSpeed(int amount) {
         speed += amount;
     }
 
-    public void lowerAttack(int amount){
+    public void lowerAttack(int amount) {
         attack -= amount;
     }
 
-    public void lowerDefense(int amount){
+    public void lowerDefense(int amount) {
         defense -= amount;
     }
 
-    public void lowerSpeed(int amount){
+    public void lowerSpeed(int amount) {
         speed -= amount;
     }
 
 
-    public static List<Enemy> initializeEnemies() {
-        List<Enemy> enemies = new ArrayList<>();
-
-        // Note: These values are only temporary placeholders only. I will fix it later
-        // Note: The 'false' parameter is for the 'isBoss' boolean flag.
-        enemies.add(new Enemy("Goblin", 30, 10, 5, 2, 15, 10, false, Arrays.asList("gold coin", "small dagger"), false));
-        enemies.add(new Enemy("Zombie", 50, 8, 10, 1, 10, 20, false, Arrays.asList("rotten flesh", "bone"), false));
-        enemies.add(new Enemy("Skeleton", 40, 12, 8, 3, 12, 15, false, Arrays.asList("bone", "rusty sword"), false));
-        enemies.add(new Enemy("Dragon", 100, 20, 15, 5, 30, 50, false, Arrays.asList("dragon scale", "treasure"), false));
-
-        return enemies;
-    }
+//    public static List<Enemy> initializeEnemies() {
+//        List<Enemy> enemies = new ArrayList<>();
+//
+//        // Note: These values are only temporary placeholders only. I will fix it later
+//        // Note: The 'false' parameter is for the 'isBoss' boolean flag.
+//        enemies.add(new Enemy("Goblin", 30, 10, 5, 2, 15, 10, false, Arrays.asList("gold coin", "small dagger"), false));
+//        enemies.add(new Enemy("Zombie", 50, 8, 10, 1, 10, 20, false, Arrays.asList("rotten flesh", "bone"), false));
+//        enemies.add(new Enemy("Skeleton", 40, 12, 8, 3, 12, 15, false, Arrays.asList("bone", "rusty sword"), false));
+//        enemies.add(new Enemy("Dragon", 100, 20, 15, 5, 30, 50, false, Arrays.asList("dragon scale", "treasure"), false));
+//
+//        return enemies;
+//    }
 
     @Override
 
@@ -160,8 +160,9 @@ public class Enemy{
         return name + ": Health=" + currentHealth + ", Attack=" + attack + ", Defense=" + defense +
                 ", Speed=" + speed + ", Damage=" + damage + ", XP=" + xpWorth + ", Drops=" + itemDrops;
     }
-}
+
     public int getDamage(){
         return damage;
     }
+
 }

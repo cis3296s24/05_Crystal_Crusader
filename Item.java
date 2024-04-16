@@ -9,7 +9,7 @@ public class Item {
     private int attackPwr;
     private boolean isEquipped;
     private List<String> abilities;
-    
+
     public Item(String name, String description, int itemID, int itemHealth, int attackPwr) {
         this.name = name;
         this.description = description;
@@ -19,11 +19,11 @@ public class Item {
         this.isEquipped = false;
         this.abilities = null;
     }
-    
+
     public String getName() {
         return name;
     }
-    
+
     public String getDescription() {
         return description;
     }
@@ -35,7 +35,7 @@ public class Item {
     public int getHealth() {
         return itemHealth;
     }
-   
+
     public void restoreHealth(int health) {
         this.itemHealth += health;
     }
