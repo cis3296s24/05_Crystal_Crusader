@@ -139,7 +139,7 @@ public class Enemy{
         speed -= amount;
     }
 
-
+/* 
     public static List<Enemy> initializeEnemies() {
         List<Enemy> enemies = new ArrayList<>();
 
@@ -153,6 +153,8 @@ public class Enemy{
         return enemies;
     }
 
+    */
+
     @Override
 
     //to display name and stats
@@ -160,7 +162,7 @@ public class Enemy{
         return name + ": Health=" + currentHealth + ", Attack=" + attack + ", Defense=" + defense +
                 ", Speed=" + speed + ", Damage=" + damage + ", XP=" + xpWorth + ", Drops=" + itemDrops;
     }
-}
+
     public int getDamage(){
         return damage;
     }
