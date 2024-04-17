@@ -2,9 +2,15 @@
   <library name="lib">
     <CLASSES>
       <root url="file://$USER_HOME$/Downloads/javafx-sdk-22/lib" />
+      <root url="file://$PROJECT_DIR$/../../javafx-sdk-22/lib" />
+      <root url="file://$PROJECT_DIR$/../../javafx-sdk-22/legal" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../../javafx-sdk-22" />
+    </SOURCES>
+    <jarDirectory url="file://$PROJECT_DIR$/../../javafx-sdk-22/lib" recursive="false" />
     <jarDirectory url="file://$USER_HOME$/Downloads/javafx-sdk-22/lib" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../../javafx-sdk-22" recursive="false" type="SOURCES" />
   </library>
 </component>

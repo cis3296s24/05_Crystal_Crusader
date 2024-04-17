@@ -1,18 +1,22 @@
+import javafx.beans.property.StringProperty;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
+
 public class GamePage {
     private Pane rootPane;
 
-    public GamePage(MainUserInterface mainApp) {
-        setupGamePage(mainApp);
-    }
+    public String input;
 
-    private void setupGamePage(MainUserInterface mainApp) {
+    public GamePage(MainUserInterface mainApp) {
         rootPane = new Pane();
+        GamePlay gameplay = new GamePlay(this);
+        Thread game = new Thread(gameplay);
+
         rootPane.setStyle("-fx-background-color: black;"); // Set background color
 
         // Output label
@@ -20,26 +24,29 @@ public class GamePage {
         outputLabel.setLayoutX(100); // Positioning
         outputLabel.setLayoutY(50);
         outputLabel.setTextFill(Color.WHITE); // Text color
+        //outputLabel.textProperty().bind(gameplay.getOutput(""));  // Bind directly to player's outputText
 
         // Input field
         TextField inputField = new TextField();
         inputField.setLayoutX(100);
-        inputField.setLayoutY(100);
+        inputField.setLayoutY(200);
 
         // Submit button
         Button submitButton = new Button("Submit");
         submitButton.setLayoutX(100);
-        submitButton.setLayoutY(150);
+        submitButton.setLayoutY(250);
         submitButton.setOnAction(event -> {
             // Example of handling input and updating the output
-            String inputText = inputField.getText();
-            outputLabel.setText("You entered: " + inputText);
+            input = inputField.getText();
+            //    outputLabel.textProperty().bind(gameplay.getOutput(inputText));  // Bind directly to player's outputText
+
+            gameplay.proceed();
         });
 
         // Quit button
         Button quitButton = new Button("Quit");
         quitButton.setLayoutX(100);
-        quitButton.setLayoutY(200);
+        quitButton.setLayoutY(300);
         quitButton.setOnAction(event -> {
             // Quit the game
             mainApp.switchToMainPage();
@@ -47,9 +54,14 @@ public class GamePage {
 
 
         rootPane.getChildren().addAll(outputLabel, inputField, submitButton, quitButton);
+        game.start();
     }
 
     public Pane getRootPane() {
         return rootPane;
+    }
+
+    public void setOutput(String inputText){
+        //sets outputLabel to inputText
     }
 }

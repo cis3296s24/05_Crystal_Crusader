@@ -1,8 +1,9 @@
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import java.util.Random;
-
 
 public class PlayerObject {
     private String name;
@@ -14,6 +15,10 @@ public class PlayerObject {
     private int skillPoints;
     private Item equippedWeapon;
     private List<Item> inventory;
+    // Input and output texts for UI
+    private final StringProperty outputText = new SimpleStringProperty("Initial text ready...");
+    private String inputText;
+    private boolean readyToProceed = false;  // Flag to control flow
 
 
     public PlayerObject(String name) {
@@ -22,7 +27,6 @@ public class PlayerObject {
         this.currentHealth = healthPoints;
         this.inventory = new ArrayList<>();
         this.skillPoints = 0; //starting experience points (can increment in program)
-
     }
     public static void main(String[]args) {
         //main class
@@ -82,24 +86,26 @@ public class PlayerObject {
     }
 
     //returns 0 if player ran away, 1 if player won, and 2 if player lost
-    public int battle(Enemy enemy){
-        System.out.println("A " + enemy.getName() + " appears!!");
+    public int battle(Enemy enemy, GamePage UI){
+        outputText.set("You encountered a " + enemy.getName() + "!!\n(Click submit to continue)");
+        waitForInput();
+
         Random rand = new Random();
-        Scanner scan = new Scanner(System.in);
+//        Scanner scan = new Scanner(System.in);
         boolean battleOver = false;
         double chance;
         while(!battleOver){
             if(this.speed >= enemy.getSpeed()){
-                
+
                 //player turn
 
                 int playerChoice = 0;
                 while(playerChoice != 1 && playerChoice != 2 && playerChoice != 3){
-                    System.out.println("What will you do?");
-                    System.out.println("1: Attack");
-                    System.out.println("2: Item");
-                    System.out.println("3: Run");
-                    playerChoice = scan.nextInt();
+                    outputText.set("What will you do?\n1. Attack\n2. Item\n3. Run");
+                    waitForInput();
+
+//                    playerChoice = scan.nextInt();
+                    playerChoice = Integer.parseInt(UI.input);
                     switch(playerChoice){
                         case 1:
                             System.out.println("You attack with your " + equippedWeapon.getName() + "!");
@@ -136,7 +142,7 @@ public class PlayerObject {
                                         System.out.println((i + 1) + ": " + battleItems.get(i).getName());
                                     }
                                     System.out.println((battleItems.size() + 1) + ": Back");
-                                    itemChoice = scan.nextInt();
+//                                    itemChoice = scan.nextInt();
                                     if(itemChoice != 0 && itemChoice < battleItems.size() + 1){
                                         battleItems.get(itemChoice).use(this, enemy);
                                     }else if(itemChoice == battleItems.size() + 1){
@@ -168,13 +174,13 @@ public class PlayerObject {
                 }
 
                 // check if enemy is defeated or if player ran
-                
+
                 if(battleOver == true){
                     break;
                 }
 
                 //enemy turn
-                
+
                 System.out.println("The " + enemy.getName() + " attacks!!");
                 chance = rand.nextInt(19) + 1;
                 if(enemy.getAttack() >= defense * 2){
@@ -230,11 +236,15 @@ public class PlayerObject {
 
                 int playerChoice = 0;
                 while(playerChoice != 1 && playerChoice != 2 && playerChoice != 3){
+                    outputText.set("What will you do?\n1. Attack\n2. Item\n3. Run");
+                    waitForInput();
                     System.out.println("What will you do?");
                     System.out.println("1: Attack");
                     System.out.println("2: Item");
                     System.out.println("3: Run");
-                    playerChoice = scan.nextInt();
+//                    playerChoice = scan.nextInt();
+                    playerChoice = Integer.parseInt(inputText);
+
                     switch(playerChoice){
                         case 1:
                             System.out.println("You attack with your " + equippedWeapon.getName() + "!");
@@ -271,7 +281,7 @@ public class PlayerObject {
                                         System.out.println((i + 1) + ": " + battleItems.get(i).getName());
                                     }
                                     System.out.println((battleItems.size() + 1) + ": Back");
-                                    itemChoice = scan.nextInt();
+//                                    itemChoice = scan.nextInt();
                                     if(itemChoice != 0 && itemChoice < battleItems.size() + 1){
                                         battleItems.get(itemChoice).use(this, enemy);
                                     }else if(itemChoice == battleItems.size() + 1){
@@ -322,7 +332,7 @@ public class PlayerObject {
         }else{
             System.out.println("You got away safely!");
             return 0;
-        } 
+        }
     }
 
     public List<Item> getBattleItems(){
@@ -333,5 +343,21 @@ public class PlayerObject {
             }
         }
         return battleItems;
+    }
+
+    public void waitForInput()
+    {
+        synchronized (this) {
+            while (!readyToProceed) {
+                try {
+                    wait();  // Call wait() on the instance 'lock', not 'Thread' or statically
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    System.out.println("Game was interrupted unexpectedly");
+                    // Optionally handle the interrupt according to your needs
+                }
+            }
+        }
+        readyToProceed = false;  // Reset the flag for the next round
     }
 }
