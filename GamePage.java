@@ -15,6 +15,7 @@ public class GamePage {
         rootPane = new Pane();
         GamePlay gameplay = new GamePlay(this);
         Thread game = new Thread(gameplay);
+        game.start();
 
         rootPane.setStyle("-fx-background-color: black;"); // Set background color
 
@@ -37,6 +38,7 @@ public class GamePage {
         submitButton.setOnAction(event -> {
             input = inputField.getText();
             inputField.clear();  // Clear input field after submitting
+            gameplay.proceed();
         });
 
         // Quit button
@@ -46,7 +48,7 @@ public class GamePage {
         quitButton.setOnAction(event -> mainApp.switchToMainPage());  // Quit the game
 
         rootPane.getChildren().addAll(outputLabel, inputField, submitButton, quitButton);
-        game.start();
+
     }
 
     public Pane getRootPane() {
@@ -55,5 +57,14 @@ public class GamePage {
 
     public void setOutput(String inputText) {
         outputText.set(inputText);  // Update the StringProperty, which automatically updates the label's text
+    }
+
+    public Runnable runnableSetOutput(String inputText){
+        Runnable runnable = new Runnable(){
+            public void run() {
+                outputText.set(inputText);  // Update the StringProperty, which automatically updates the label's text
+            }
+        };
+        return runnable;
     }
 }
