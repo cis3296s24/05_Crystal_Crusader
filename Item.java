@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Item {
@@ -10,14 +12,14 @@ public class Item {
     private boolean isEquipped;
     private List<String> abilities;
 
-    public Item(String name, String description, int itemID, int itemHealth, int attackPwr) {
+    public Item(String name, String description, int itemID, int itemHealth, int attackPwr, List<String> abilities) {
         this.name = name;
         this.description = description;
         this.itemID = itemID;
         this.itemHealth = itemHealth;
         this.attackPwr = attackPwr;
         this.isEquipped = false;
-        this.abilities = null;
+        this.abilities = new ArrayList<>();
     }
 
     public String getName() {
@@ -57,9 +59,23 @@ public class Item {
         return isEquipped;
     }
 
-    public String addAbilities(String ability) {
+    public void addAbilities(String ability) {
+        if(this.abilities == null) {
+            this.abilities = new ArrayList<>();
+        }
         this.abilities.add(ability);
-        return ability;
+    }
+    public static List<Item> initializeItems() {
+        //function for adding items
+
+        List<Item> items = new ArrayList<>();
+        //item id, item health, attack pwr numbers are placeholders for now
+        items.add(new Item("Sword", "A sharp blade suitable for combat.", 101, 100, 15, Arrays.asList("Slice", "Dice")));
+        items.add(new Item("Shield", "Protects the user from attacks.", 102, 150, 5, Arrays.asList("Block", "Reflect")));
+        items.add(new Item("Healing Potion", "Restores health when used.", 103, 1, 0, Arrays.asList("Heal")));
+        items.add(new Item("Magic Wand", "A mystical wand that emits magical energies.", 104, 80, 25, Arrays.asList("Cast Spell", "Magic Boost")));
+        items.add(new Item("Battle Armor", "Provides excellent protection during combat.", 105, 200, 10, Arrays.asList("Increase Defense", "Reflect Damage")));
+        return items;
     }
 
     public List<String> getAbilities() {
