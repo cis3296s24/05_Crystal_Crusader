@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -74,6 +75,12 @@ public class Area{
             //other area names
         }
         return detailedDescription;
+    }
+
+    public static List<Area> initializeAreas() {
+        List<Area> areas = new ArrayList();
+        areas.add(new Area("Castle", true, true, true, false, Item.initializeItems(), Enemy.initializeEnemies()));
+        return areas;
     }
 
     /*
