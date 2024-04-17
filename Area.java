@@ -12,105 +12,102 @@ interactWithArea() different commands like "search" (to find item) or "use item"
 add method that displays something after a certain time after the player entered the area, maybe the enemy appears
 
  */
-public class Area {
+public class Area{
+
+   // Area castle = new Area("Castle", true, true, true, false, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+
     private String name; //each area needs a name to identify it like an ID
-    private String description; //each area needs a description
-
-    //crystal object?
-
     /*
-    these may not be needed
+    Basic Variables we could use
      */
     private boolean hasCrystal; //check if area has crystal
     private boolean hasItems; //check if area has items
     private boolean hasEnemies; //check is area has enemy
     private boolean isFinalBossArea; //check if its final boss area
-
-    /*
-    The type should be the Item object or Enemy object, but I don't know how were doing those classes yet.
-     */
-    private List<String> items; //get the list of items in the area (item objects)
-    private List<String> enemies; //get the list of enemies in the area (enemy objects)
-    private List<String> paths; //get the lists of areas you can travel to from here?
+    private List<Item> items; //get the list of items in the area (item objects)
+    private List<Enemy> enemies; //get the list of enemies in the area (enemy objects)
 
     //constructor
-    public Area(String name, String description, boolean hasCrystal, boolean hasWeapons, boolean hasItems, boolean hasEnemies,
-              boolean isFinalBossArea, List<String> items, List<String> enemies, List<String> paths){
+    public Area(String name, boolean hasCrystal, boolean hasItems, boolean hasEnemies,
+              boolean isFinalBossArea, List<Item> items, List<Enemy> enemies){
         this.name = name;
-        this.description = description;
         this.hasCrystal = hasCrystal;
         this.hasItems = hasItems;
         this.hasEnemies = hasEnemies;
         this.isFinalBossArea = isFinalBossArea;
         this.items = items;
         this.enemies = enemies;
-        this.paths = paths;
     }
 
+    /*
+    More important methods
+     */
+    public String enterArea(){
+        String shortDescription = "";
+        switch(this.getName()) {
+            case "Castle":
+                shortDescription = "A looming castle with towering stone walls and heavy iron gates.";
+                break;
+            //other area names;
+        }
+        return shortDescription;
+    }
+
+    public String detailedDescription(){
+        String detailedDescription = "";
+        switch(this.getName()){
+            case "Castle":
+                detailedDescription = "Perched atop a craggy hill, the ancient Ravenhold Castle dominates the landscape, " +
+                    "its imposing stone walls weathered by centuries of battle and storm. As you approach, the sheer " +
+                    "scale of the fortress becomes apparent, with its battlements casting long shadows across the barren landscape. " +
+                    "The massive iron gates are etched with the emblems of forgotten royal lines, and they creak ominously as they " +
+                    "swing open to grant you entry Inside, the grand courtyard is bordered by towering walls and dotted with statues of " +
+                    "past monarchs, each telling a silent tale of glory and despair. Beyond lies the main keep, where intricate tapestries " +
+                    "and dusty velvet drapes line the halls, illuminated by flickering torches set in sconces along the walls. Echoes of " +
+                    "footsteps resonate through the vast chambers, a reminder of the castle's eerie solitude. Secret passages hidden behind " +
+                    "moving bookcases and under stairwells lead to forgotten rooms, each holding relics of the castle’s storied past. The air " +
+                    "is cool and carries a faint mustiness, the scent of time that no amount of breeze through the arrow slits can displace. " +
+                    "Each corner of the castle, from the lofty towers to the deep dungeons, whispers secrets of ancient intrigues and the " +
+                    "echoes of long-lost battles";
+                break;
+
+            //other area names
+        }
+        return detailedDescription;
+    }
+
+    /*
+    Basic methods that we could use if helpful
+     */
     public String getName(){
         return name;
     }
-
-    public String getDescription(){
-        return description;
-    }
-
-    public void displayAreaInfo() {
-        System.out.println(description);
-        //Could show other info here like hints, weather, time of day, etc
-    }
-
     public boolean hasCrystal(){
         return hasCrystal;
     }
-
-    //Method to remove a crystal
     public void removeCrystal() {
         this.hasCrystal = false;
     }
-
     public boolean hasItems(){
         return hasItems;
     }
-
     public boolean hasEnemies(){
         return hasEnemies;
     }
-
     public boolean isFinalBossArea(){
         return isFinalBossArea;
     }
-
-    public List<String> getItems(){
+    public List<Item> getAreaItems(){
         return items;
     }
-
-    //just in case we want
-    public void addItem(String item) {
-        items.add(item);
-    }
-
-    //everytime the user finds an item
-    public void removeItem(String item) {
+    public void removeItem(Item item) {
         items.remove(item);
     }
-
-    public List<String> getEnemies(){
+    public List<Enemy> getEnemies(){
         return enemies;
     }
-
-    public void addEnemy(String enemy) {
-        enemies.add(enemy);
-    }
-
-    public void removeEnemy(String enemy) {
+    public void removeEnemy(Enemy enemy) {
         enemies.remove(enemy);
     }
-
-    //also add a method to move to the different areas that user can call with the different area ids (name)
-    public List<String> getPaths(){
-        return paths;
-    }
-
 }
 
