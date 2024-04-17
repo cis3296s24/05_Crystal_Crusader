@@ -51,6 +51,6 @@ public class GamePlay implements Runnable{
         UI.setOutput("Welcome to Crystal Crusader!!\n(Click submit to continue)");
         waitForInput();
         String testMessage = UI.input;
-        UI.setOutput("You typed in: " + testMessage);
+        Platform.runLater(UI.runnableSetOutput("You typed in: " + testMessage));
     }
 }

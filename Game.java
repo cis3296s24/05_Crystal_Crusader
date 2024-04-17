@@ -10,9 +10,9 @@ import java.util.Scanner;
 import java.util.Arrays;
 
 import java.util.List;
-
+/*
 public class Game {
-    public static void main(String[] args) {
+    public static void gameStart(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
         PlayerObject player = new PlayerObject("Hero");
@@ -21,6 +21,7 @@ public class Game {
             item, and enemy objects. It works like this rn since we only have one area.
             Could change it to work with multiple, but for now we may just have one area.
          */
+/*
         List<Area> areas = Area.initializeAreas();
 
         //add the backstory
@@ -49,6 +50,7 @@ public class Game {
                 I'm aware that your classes have other methods we could call for each case that
                 could enhance the experience/game. We can add them.
              */
+/*
             switch (choice) {
                 case 1: //needs work
                     System.out.println(currentArea.detailedDescription()); //more detailed description
@@ -84,3 +86,4 @@ public class Game {
         scanner.close();
     }
 }
+*/
