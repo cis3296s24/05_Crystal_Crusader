@@ -1,3 +1,4 @@
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.Label;
@@ -5,11 +6,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 
-import java.util.ArrayList;
-
 public class GamePage {
     private Pane rootPane;
-
+    private StringProperty outputText = new SimpleStringProperty(""); // StringProperty for binding
     public String input;
 
     public GamePage(MainUserInterface mainApp) {
@@ -24,7 +23,7 @@ public class GamePage {
         outputLabel.setLayoutX(100); // Positioning
         outputLabel.setLayoutY(50);
         outputLabel.setTextFill(Color.WHITE); // Text color
-        //outputLabel.textProperty().bind(gameplay.getOutput(""));  // Bind directly to player's outputText
+        outputLabel.textProperty().bind(outputText);  // Bind the label's text property to the outputText StringProperty
 
         // Input field
         TextField inputField = new TextField();
@@ -36,22 +35,15 @@ public class GamePage {
         submitButton.setLayoutX(100);
         submitButton.setLayoutY(250);
         submitButton.setOnAction(event -> {
-            // Example of handling input and updating the output
             input = inputField.getText();
-            //    outputLabel.textProperty().bind(gameplay.getOutput(inputText));  // Bind directly to player's outputText
-
-            gameplay.proceed();
+            inputField.clear();  // Clear input field after submitting
         });
 
         // Quit button
         Button quitButton = new Button("Quit");
         quitButton.setLayoutX(100);
         quitButton.setLayoutY(300);
-        quitButton.setOnAction(event -> {
-            // Quit the game
-            mainApp.switchToMainPage();
-        });
-
+        quitButton.setOnAction(event -> mainApp.switchToMainPage());  // Quit the game
 
         rootPane.getChildren().addAll(outputLabel, inputField, submitButton, quitButton);
         game.start();
@@ -61,7 +53,7 @@ public class GamePage {
         return rootPane;
     }
 
-    public void setOutput(String inputText){
-        //sets outputLabel to inputText
+    public void setOutput(String inputText) {
+        outputText.set(inputText);  // Update the StringProperty, which automatically updates the label's text
     }
 }
