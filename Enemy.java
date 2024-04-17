@@ -161,8 +161,7 @@ public class Enemy {
                 ", Speed=" + speed + ", Damage=" + damage + ", XP=" + xpWorth + ", Drops=" + itemDrops;
     }
 
-    public int getDamage(){
+    public int getDamage() {
         return damage;
     }
-
 }
