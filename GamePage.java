@@ -10,15 +10,12 @@ import java.util.ArrayList;
 public class GamePage {
     private Pane rootPane;
 
-    public GamePage(MainUserInterface mainApp) {
-        setupGamePage(mainApp);
-    }
+    public String input;
 
-    private void setupGamePage(MainUserInterface mainApp) {
+    public GamePage(MainUserInterface mainApp) {
         rootPane = new Pane();
-        PlayerObject player = new PlayerObject("Player");
-        Thread battleThread = new Thread(player);
-        battleThread.start();
+        GamePlay gameplay = new GamePlay(this);
+        Thread game = new Thread(gameplay);
 
         rootPane.setStyle("-fx-background-color: black;"); // Set background color
 
@@ -27,7 +24,7 @@ public class GamePage {
         outputLabel.setLayoutX(100); // Positioning
         outputLabel.setLayoutY(50);
         outputLabel.setTextFill(Color.WHITE); // Text color
-        outputLabel.textProperty().bind(player.getOutput(""));  // Bind directly to player's outputText
+        //outputLabel.textProperty().bind(gameplay.getOutput(""));  // Bind directly to player's outputText
 
         // Input field
         TextField inputField = new TextField();
@@ -40,10 +37,10 @@ public class GamePage {
         submitButton.setLayoutY(250);
         submitButton.setOnAction(event -> {
             // Example of handling input and updating the output
-            String inputText = inputField.getText();
-            outputLabel.textProperty().bind(player.getOutput(inputText));  // Bind directly to player's outputText
+            input = inputField.getText();
+            //    outputLabel.textProperty().bind(gameplay.getOutput(inputText));  // Bind directly to player's outputText
 
-            player.proceedWithBattle();
+            gameplay.proceed();
         });
 
         // Quit button
@@ -57,9 +54,14 @@ public class GamePage {
 
 
         rootPane.getChildren().addAll(outputLabel, inputField, submitButton, quitButton);
+        game.start();
     }
 
     public Pane getRootPane() {
         return rootPane;
+    }
+
+    public void setOutput(String inputText){
+        //sets outputLabel to inputText
     }
 }

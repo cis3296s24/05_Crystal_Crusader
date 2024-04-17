@@ -1,14 +1,11 @@
-import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import java.util.Random;
 
-
-public class PlayerObject implements Runnable {
+public class PlayerObject {
     private String name;
     private int healthPoints;
     private int currentHealth;
@@ -89,8 +86,8 @@ public class PlayerObject implements Runnable {
     }
 
     //returns 0 if player ran away, 1 if player won, and 2 if player lost
-    public int battle(Enemy enemy){
-        outputText.set("You encountered a " + enemy.getName() + "!!");
+    public int battle(Enemy enemy, GamePage UI){
+        outputText.set("You encountered a " + enemy.getName() + "!!\n(Click submit to continue)");
         waitForInput();
 
         Random rand = new Random();
@@ -108,7 +105,7 @@ public class PlayerObject implements Runnable {
                     waitForInput();
 
 //                    playerChoice = scan.nextInt();
-                    playerChoice = Integer.parseInt(inputText);
+                    playerChoice = Integer.parseInt(UI.input);
                     switch(playerChoice){
                         case 1:
                             System.out.println("You attack with your " + equippedWeapon.getName() + "!");
@@ -347,20 +344,7 @@ public class PlayerObject implements Runnable {
         }
         return battleItems;
     }
-    // Input method
-    public StringProperty getOutput(String input) {
-        inputText = input;
 
-        return outputText;
-    }
-    // Unlock method
-    public void proceedWithBattle() {
-        synchronized (this) {
-            readyToProceed = true;
-            notifyAll();  // Wake up all waiting threads
-        }
-    }
-    // Lock method
     public void waitForInput()
     {
         synchronized (this) {
@@ -369,19 +353,11 @@ public class PlayerObject implements Runnable {
                     wait();  // Call wait() on the instance 'lock', not 'Thread' or statically
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
-                    System.out.println("Battle was interrupted unexpectedly");
+                    System.out.println("Game was interrupted unexpectedly");
                     // Optionally handle the interrupt according to your needs
                 }
             }
         }
         readyToProceed = false;  // Reset the flag for the next round
-    }
-    // Running Method, do not remove
-    @Override
-    public void run() {
-        List<Item> items = new ArrayList<>();
-        Enemy enemy = new Enemy("Goblin", 10, 10, 10, 10, 10, 10, false, items, false);
-        battle(enemy);
-
     }
 }
