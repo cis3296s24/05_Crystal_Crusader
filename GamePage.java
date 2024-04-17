@@ -1,4 +1,5 @@
 import javafx.beans.property.StringProperty;
+import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -63,5 +64,10 @@ public class GamePage {
 
     public void setOutput(String inputText){
         //sets outputLabel to inputText
+        for(Node n : rootPane.getChildren()){
+            if(((Label) n ).getText() != null){
+
+            }
+        }
     }
 }
