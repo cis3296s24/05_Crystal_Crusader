@@ -52,7 +52,6 @@ public class GamePlay implements Runnable{
         waitForInput();
         PlayerObject player = new PlayerObject("Hero");
         List<Area> areas = Area.initializeAreas();
-        waitForInput();
         //add the backstory
         Platform.runLater(UI.runnableSetOutput("Welcome...\n(Insert backstory here)\n(Click submit to continue)"));
 
