@@ -140,18 +140,20 @@ public class Enemy {
     }
 
 
-//    public static List<Enemy> initializeEnemies() {
-//        List<Enemy> enemies = new ArrayList<>();
-//
-//        // Note: These values are only temporary placeholders only. I will fix it later
-//        // Note: The 'false' parameter is for the 'isBoss' boolean flag.
-//        enemies.add(new Enemy("Goblin", 30, 10, 5, 2, 15, 10, false, Arrays.asList("gold coin", "small dagger"), false));
-//        enemies.add(new Enemy("Zombie", 50, 8, 10, 1, 10, 20, false, Arrays.asList("rotten flesh", "bone"), false));
-//        enemies.add(new Enemy("Skeleton", 40, 12, 8, 3, 12, 15, false, Arrays.asList("bone", "rusty sword"), false));
-//        enemies.add(new Enemy("Dragon", 100, 20, 15, 5, 30, 50, false, Arrays.asList("dragon scale", "treasure"), false));
-//
-//        return enemies;
-//    }
+/*
+    public static List<Enemy> initializeEnemies() {
+        List<Enemy> enemies = new ArrayList<>();
+
+        // Note: These values are only temporary placeholders only. I will fix it later
+        // Note: The 'false' parameter is for the 'isBoss' boolean flag.
+        enemies.add(new Enemy("Goblin", 30, 10, 5, 2, 15, 10, false, Arrays.asList("gold coin", "small dagger"), false));
+        enemies.add(new Enemy("Zombie", 50, 8, 10, 1, 10, 20, false, Arrays.asList("rotten flesh", "bone"), false));
+        enemies.add(new Enemy("Skeleton", 40, 12, 8, 3, 12, 15, false, Arrays.asList("bone", "rusty sword"), false));
+        enemies.add(new Enemy("Dragon", 100, 20, 15, 5, 30, 50, false, Arrays.asList("dragon scale", "treasure"), false));
+
+        return enemies;
+    }
+*/
 
     @Override
 
@@ -163,6 +165,16 @@ public class Enemy {
 
     public int getDamage(){
         return damage;
+    }
+
+
+
+
+    // Reduces the defense of the enemy.
+    //note: this is called in the item.java's use() function
+    public void decreaseDefense(int amount) {
+        this.defense = Math.max(0, this.defense - amount);
+        System.out.println(this.name + " has defense reduced by " + amount);
     }
 
 }

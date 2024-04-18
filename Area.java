@@ -78,7 +78,7 @@ public class Area{
     }
 
     public static List<Area> initializeAreas() {
-        List<Area> areas = new ArrayList();
+        List<Area> areas = new ArrayList<>();
         areas.add(new Area("Castle", true, true, true, false, Item.initializeItems(), Enemy.initializeEnemies()));
         return areas;
     }
