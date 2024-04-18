@@ -41,12 +41,14 @@
 }
 
 #input-field {
-    -fx-pref-width: 80%;
-    -fx-pref-height: 90px;  /* Adjust height as needed */
+    -fx-alignment: top-center;
+    -fx-pref-width: 60%;
+    -fx-pref-height: 30px;  /* Adjust height as needed */
     -fx-text-fill: #336699;
-    -fx-background-color: black;
-    -fx-border-width: 2;
-    -fx-font-size: 14px;
+    -fx-font-size: 12px;
+    -fx-highlight-fill: lightgray;
+    -fx-highlight-text-fill: black;
+    -fx-display-caret: true;
 }
 
 #submit-button, #quit-button {
