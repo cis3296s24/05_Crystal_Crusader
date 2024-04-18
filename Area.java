@@ -36,8 +36,8 @@ public class Area{
         this.hasItems = hasItems;
         this.hasEnemies = hasEnemies;
         this.isFinalBossArea = isFinalBossArea;
-        this.items = items;
-        this.enemies = enemies;
+        this.items = items != null ? items : new ArrayList<>();  // Ensure items is never null
+        this.enemies = enemies != null ? enemies : new ArrayList<>();  // Ensure enemies is never null
     }
 
     /*
@@ -46,41 +46,53 @@ public class Area{
     public String enterArea(){
         String shortDescription = "";
         switch(this.getName()) {
-            case "Castle":
-                shortDescription = "A looming castle with towering stone walls and heavy iron gates.";
+            case "Cragrock Keep":
+                shortDescription = "The gates of Cragrock Keep loom before you, cloaked in an unnatural fog. A chilling silence hangs in the air,\n " +
+                        "broken only by your determined steps.\n";
                 break;
             //other area names;
         }
         return shortDescription;
     }
 
-    public String detailedDescription(){
+    public String detailedDescription() {
         String detailedDescription = "";
-        switch(this.getName()){
-            case "Castle":
-                detailedDescription = "Perched atop a craggy hill, the ancient Ravenhold Castle dominates the landscape, " +
-                    "its imposing stone walls weathered by centuries of battle and storm. As you approach, the sheer " +
-                    "scale of the fortress becomes apparent, with its battlements casting long shadows across the barren landscape. " +
-                    "The massive iron gates are etched with the emblems of forgotten royal lines, and they creak ominously as they " +
-                    "swing open to grant you entry Inside, the grand courtyard is bordered by towering walls and dotted with statues of " +
-                    "past monarchs, each telling a silent tale of glory and despair. Beyond lies the main keep, where intricate tapestries " +
-                    "and dusty velvet drapes line the halls, illuminated by flickering torches set in sconces along the walls. Echoes of " +
-                    "footsteps resonate through the vast chambers, a reminder of the castle's eerie solitude. Secret passages hidden behind " +
-                    "moving bookcases and under stairwells lead to forgotten rooms, each holding relics of the castle’s storied past. The air " +
-                    "is cool and carries a faint mustiness, the scent of time that no amount of breeze through the arrow slits can displace. " +
-                    "Each corner of the castle, from the lofty towers to the deep dungeons, whispers secrets of ancient intrigues and the " +
-                    "echoes of long-lost battles.";
-                        // Test Texts: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
+        switch (this.getName()) {
+            case "Cragrock Keep":
+                String itemDescription = "";
+                if (!getAreaItems().isEmpty()) {
+                    Item firstItem = getAreaItems().get(0);
+                    itemDescription = firstItem.getName();
+                }
+
+                String enemyDescription = "";
+                if (!getEnemies().isEmpty()) {
+                    StringBuilder sb = new StringBuilder();
+                    for (Enemy enemy : getEnemies()) {
+                        if (sb.length() > 0) sb.append(", ");
+                        sb.append(enemy.getName());
+                    }
+                    enemyDescription = sb.toString();
+                }
+
+                detailedDescription = "As you venture into the maw of Cragrock Keep, the air grows dense with a palpable darkness that seems to pulse with the keep's ancient\n" +
+                        "and malevolent history. A few paces in, your eyes catch a glint of a" +  itemDescription + ". With cautious reverence, \n " +
+                        "you pick it up, knowing it could be of use later on.\n\n" +
+                        "A cacophony of eerie sounds begins to swell around you. There's the scrape of bone on stone, chillingly rhythmic. This is mingled\n" +
+                        "with a low, guttural growl, the kind that could only belong to a creature corrupted beyond its natural form. A sudden, fleeting \n" +
+                        "warmth washes over you, as if a great flame has briefly flickered to life and then died down. Then it hits you, you finally put\n" +
+                        "it together—these sounds must be coming from" + enemyDescription + "They must be protecting the crystal, lurking in the darkness, each \n" +
+                        "creature a sentinel set by the sorcerer to thwart any who dare to reclaim Eldoria's lost light\n";
                 break;
 
-            //other area names
+            // Add other cases for different areas as necessary
         }
         return detailedDescription;
     }
 
     public static List<Area> initializeAreas() {
         List<Area> areas = new ArrayList();
-        areas.add(new Area("Castle", true, true, true, false, null, null));
+        areas.add(new Area("Cragrock Keep", true, true, true, true, null, null));
         return areas;
     }
 
