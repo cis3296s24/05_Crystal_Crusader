@@ -14,8 +14,8 @@ public class PlayerObject {
     private int defense;
     private int speed;
     private int skillPoints;
-    private Item equippedWeapon;
-    private List<Item> inventory;
+    public Item equippedWeapon;
+    public List<Item> inventory;
     // Input and output texts for UI
     private final StringProperty outputText = new SimpleStringProperty("Initial text ready...");
     private String inputText;
