@@ -1,40 +1,37 @@
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
+import javafx.scene.layout.VBox;
 
 public class GamePage {
-    private Pane rootPane;
+    private VBox rootPane = new VBox(20); // spacing between children
     private StringProperty outputText = new SimpleStringProperty(""); // StringProperty for binding
     public String input;
 
     public GamePage(MainUserInterface mainApp) {
-        rootPane = new Pane();
         GamePlay gameplay = new GamePlay(this);
         Thread game = new Thread(gameplay);
         game.start();
 
-        rootPane.setStyle("-fx-background-color: black;"); // Set background color
+        rootPane.setId("game-page"); // CSS ID for styling
 
-        // Output label
-        Label outputLabel = new Label("Game Output");
-        outputLabel.setLayoutX(100); // Positioning
-        outputLabel.setLayoutY(50);
-        outputLabel.setTextFill(Color.WHITE); // Text color
-        outputLabel.textProperty().bind(outputText);  // Bind the label's text property to the outputText StringProperty
-
+        TextArea outputTextArea = new TextArea();
+        outputTextArea.setId("output-text-area");
+        outputTextArea.setEditable(false);  // Make TextArea non-editable
+        outputTextArea.setWrapText(true);  // Enable text wrapping
+        outputTextArea.textProperty().bind(outputText);  // Bind the TextArea's text property to the outputText StringProperty
         // Input field
         TextField inputField = new TextField();
-        inputField.setLayoutX(100);
-        inputField.setLayoutY(200);
+        inputField.setId("input-field"); // CSS ID for styling
 
         // Submit button
         Button submitButton = new Button("Submit");
-        submitButton.setLayoutX(100);
-        submitButton.setLayoutY(250);
+        submitButton.setId("submit-button"); // CSS ID for styling
         submitButton.setOnAction(event -> {
             input = inputField.getText();
             inputField.clear();  // Clear input field after submitting
@@ -43,11 +40,10 @@ public class GamePage {
 
         // Quit button
         Button quitButton = new Button("Quit");
-        quitButton.setLayoutX(100);
-        quitButton.setLayoutY(300);
+        quitButton.setId("quit-button"); // CSS ID for styling
         quitButton.setOnAction(event -> mainApp.switchToMainPage());  // Quit the game
 
-        rootPane.getChildren().addAll(outputLabel, inputField, submitButton, quitButton);
+        rootPane.getChildren().addAll(outputTextArea, inputField, submitButton, quitButton);
 
     }
 

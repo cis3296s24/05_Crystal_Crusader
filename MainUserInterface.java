@@ -11,6 +11,8 @@ import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.net.URL;
+
 public class MainUserInterface extends Application implements SettingsCallback {
     // Define the triangle and blink animation globally so they can be used in the setupButton method
     Polygon triangleLeft;
@@ -55,6 +57,14 @@ public class MainUserInterface extends Application implements SettingsCallback {
         startButton.setOnAction(e -> {
             GamePage gamePage = new GamePage(this); // Create an instance of GamePage
             Scene gameScene = new Scene(gamePage.getRootPane(), 800, 600); // Use the GamePage's root pane
+            // Loading the stylesheet
+            URL stylesheetURL = getClass().getResource("/style.css"); // Make sure the path is correct
+            if (stylesheetURL != null) {
+                gameScene.getStylesheets().add(stylesheetURL.toExternalForm());
+            } else {
+                System.out.println("ERROR: Failed to load style.css");
+            }
+
             primaryStage.setScene(gameScene); // Switch to the game scene
             System.out.println("Game started!");
         });
