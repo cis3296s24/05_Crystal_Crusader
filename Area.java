@@ -69,7 +69,8 @@ public class Area{
                     "moving bookcases and under stairwells lead to forgotten rooms, each holding relics of the castle’s storied past. The air " +
                     "is cool and carries a faint mustiness, the scent of time that no amount of breeze through the arrow slits can displace. " +
                     "Each corner of the castle, from the lofty towers to the deep dungeons, whispers secrets of ancient intrigues and the " +
-                    "echoes of long-lost battles";
+                    "echoes of long-lost battles.";
+                        // Test Texts: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
                 break;
 
             //other area names

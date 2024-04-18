@@ -24,3 +24,33 @@
     -fx-border-style: solid;
     -fx-border-width: 0;
 }
+
+#game-page {
+    -fx-padding: 20;
+    -fx-alignment: center;
+    -fx-background-color: black;
+}
+
+
+#output-text-area {
+    -fx-control-inner-background: black;
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+    -fx-highlight-fill: lightgray;
+    -fx-highlight-text-fill: black;
+}
+
+#input-field {
+    -fx-pref-width: 80%;
+    -fx-pref-height: 90px;  /* Adjust height as needed */
+    -fx-text-fill: #336699;
+    -fx-background-color: black;
+    -fx-border-width: 2;
+    -fx-font-size: 14px;
+}
+
+#submit-button, #quit-button {
+    -fx-background-color: #336699;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+}
