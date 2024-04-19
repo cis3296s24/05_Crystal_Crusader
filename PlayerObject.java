@@ -157,6 +157,7 @@ public class PlayerObject {
                                     }
                                     itemList += (battleItems.size() + 1) + ": Back";
 //                                    itemChoice = scan.nextInt();
+                                    Platform.runLater(UI.runnableSetOutput(itemList));
                                     waitForInput();
                                     itemChoice = Integer.parseInt(UI.input);
                                     if(itemChoice != 0 && itemChoice < battleItems.size() + 1){
@@ -310,6 +311,7 @@ public class PlayerObject {
                                     }
                                     itemList += (battleItems.size() + 1) + ": Back";
 //                                    itemChoice = scan.nextInt();
+                                    Platform.runLater(UI.runnableSetOutput(itemList));
                                     waitForInput();
                                     itemChoice = Integer.parseInt(UI.input);
                                     if(itemChoice != 0 && itemChoice < battleItems.size() + 1){
@@ -331,7 +333,7 @@ public class PlayerObject {
                             }else{
                                 Platform.runLater(UI.runnableSetOutput("You try to run away!!\n(Click submit to continue)"));
                                 waitForInput();
-                                chance = rand.nextInt(1);
+                                chance = rand.nextInt(2);
                                 if(chance == 1){
                                     Platform.runLater(UI.runnableSetOutput("You got away!!\n(Click submit to continue)"));
                                     waitForInput();
@@ -382,6 +384,16 @@ public class PlayerObject {
             }
         }
         return battleItems;
+    }
+
+    public List<Item> getWeapons(){
+        List<Item> weapons = new ArrayList<>();
+        for(int i = 0; i < inventory.size(); i++){
+            if(inventory.get(i).getAttackPwr() != 0){
+                weapons.add(inventory.get(i));
+            }
+        }
+        return weapons;
     }
 
     public void waitForInput()

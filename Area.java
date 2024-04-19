@@ -92,7 +92,7 @@ public class Area{
 
     public static List<Area> initializeAreas() {
         List<Area> areas = new ArrayList();
-        areas.add(new Area("Cragrock Keep", true, true, true, true, null, null));
+        areas.add(new Area("Cragrock Keep", true, true, false, true, null, null));
         return areas;
     }
 
