@@ -76,10 +76,10 @@ public class GamePlay implements Runnable{
         //here's the loop
         boolean gameRunning = true;
         while (gameRunning) {
-            Platform.runLater(UI.runnableSetOutput("You are currently in : " + currentArea.getName() + "\n" + currentArea.enterArea() + "\n(Click Submit to continue)"));
+            Platform.runLater(UI.runnableSetOutput("You are currently in : " + currentArea.getName() + "\n" + currentArea.enterArea() + "\nCurrent equipped weapon: " + player.equippedWeapon.getName() + "\n(Click Submit to continue)"));
             waitForInput();
             // Player choices
-            Platform.runLater(UI.runnableSetOutput("Choose an action:\n1: Search Area\n2. Interact With Area\n3: Battle\n4: Exit Game"));
+            Platform.runLater(UI.runnableSetOutput("Choose an action:\n1: Search Area\n2. Interact With Area\n3: Search for enemies\n4: Change Equipped weapon\n5: Exit Game"));
             waitForInput();
             String choice = UI.input;
 
@@ -112,7 +112,30 @@ public class GamePlay implements Runnable{
                     }
                     waitForInput();
                     break;
-                case "4": // Exit the game
+                case "4":
+                    int itemChoice = 0;
+                    while(itemChoice == 0){
+                        String itemList = "";
+                        itemList += "Choose an item:\n";
+                        for(int i = 0; i < player.getWeapons().size(); i++){
+                            itemList += (i + 1) + ": " + player.getWeapons().get(i).getName() + " Damage: " + player.getWeapons().get(i).getAttackPwr() + "\n";
+                        }
+                        itemList += (player.getWeapons().size() + 1) + ": Back";
+//                                    itemChoice = scan.nextInt();
+                        Platform.runLater(UI.runnableSetOutput(itemList));
+                        waitForInput();
+                        itemChoice = Integer.parseInt(UI.input);
+                        if(itemChoice != 0 && itemChoice < player.getWeapons().size() + 1){
+                            player.equippedWeapon = player.getWeapons().get(itemChoice);
+
+                        }else if(itemChoice == (player.getWeapons().size() + 2)){
+                            Platform.runLater(UI.runnableSetOutput("That's not an option\n(Click submit to continue)"));
+                            waitForInput();
+                            itemChoice = 0;
+                        }
+                    }
+                    break;
+                case "5": // Exit the game
                     System.out.println("Exiting game..."); //I know we may not need this, but just in case
                     gameRunning = false;
                     break;
