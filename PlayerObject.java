@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Random;
 
 public class PlayerObject {
+   private int amount;
     private String name;
     private int healthPoints;
     private int currentHealth;
@@ -55,6 +56,11 @@ public class PlayerObject {
     public int getDefense(){
         return defense;
     }
+    public void setDefense(int defense) {
+        this.defense = defense;
+        System.out.println("Defense set to: " + this.defense);
+    }
+
 
     public int getAttack(){
         return attack;
@@ -405,4 +411,35 @@ public class PlayerObject {
         }
         readyToProceed = false;  // Reset the flag for the next round
     }
+
+    // Adds health to the player up to their maximum health points.
+    /// preet functions for implementing use() function in item.java
+    public void heal(int amount) {
+        this.currentHealth = Math.min(this.healthPoints, this.currentHealth + amount);
+        System.out.println(this.name + " heals for " + amount + " HP.");
+    }
+    // Temporarily increases player's defense.
+    public void increaseDefense(int amount) {
+        this.defense += amount;
+        System.out.println(this.name + " increases defense by " + amount);
+    }
+
+    public void increaseAttack(int amount) {
+        this.attack += amount;
+        System.out.println(this.name + " increases attack by " + amount);
+    }
+
+    // Temporarily increases player's speed.
+    public void increaseSpeed(int amount) {
+        this.speed += amount;
+        System.out.println(this.name + " increases speed by " + amount);
+    }
+
+
+
+
+
 }
+
+
+
