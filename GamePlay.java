@@ -51,7 +51,7 @@ public class GamePlay implements Runnable{
         UI.setOutput("Welcome to Crystal Crusader!!\n(Click submit to continue)");
         waitForInput();
         PlayerObject player = new PlayerObject("Hero");
-        Item basicSword = new Item("Small Sword", "A basic sword, not very strong", 1, 100, 10);
+        Item basicSword = new Item("Small Sword", "A basic sword, not very strong", 1, 100, 10, null);
         player.inventory.add(basicSword);
         player.equippedWeapon = basicSword;
         List<Area> areas = Area.initializeAreas();
@@ -126,7 +126,7 @@ public class GamePlay implements Runnable{
                         waitForInput();
                         itemChoice = Integer.parseInt(UI.input);
                         if(itemChoice != 0 && itemChoice < player.getWeapons().size() + 1){
-                            player.equippedWeapon = player.getWeapons().get(itemChoice);
+                            player.equippedWeapon = player.getWeapons().get(itemChoice - 1);
 
                         }else if(itemChoice == (player.getWeapons().size() + 2)){
                             Platform.runLater(UI.runnableSetOutput("That's not an option\n(Click submit to continue)"));
