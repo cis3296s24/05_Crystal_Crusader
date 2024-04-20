@@ -2,10 +2,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
-import javafx.scene.paint.Color;
 import javafx.scene.layout.VBox;
 
 public class GamePage {
@@ -33,7 +31,7 @@ public class GamePage {
 
         // Submit button
         Button submitButton = new Button("Submit");
-        submitButton.setId("submit-button"); // CSS ID for styling
+        submitButton.setId("game-submit-button"); // CSS ID for styling
         submitButton.setOnAction(event -> {
             input = inputField.getText();
             inputField.clear();  // Clear input field after submitting
@@ -42,7 +40,7 @@ public class GamePage {
 
         // Quit button
         Button quitButton = new Button("Quit");
-        quitButton.setId("quit-button"); // CSS ID for styling
+        quitButton.setId("game-quit-button"); // CSS ID for styling
         quitButton.setOnAction(e -> {
             mainApp.switchToMainPage();
             mainApp.setFullScreen(isFullScreen);

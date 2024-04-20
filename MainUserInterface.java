@@ -10,7 +10,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.net.URL;
 
 public class MainUserInterface extends Application{
@@ -79,6 +78,12 @@ public class MainUserInterface extends Application{
 
             SettingsPage settingsPage = new SettingsPage(primaryStage, this); // 'this' refers to an instance of MainUserInterface
             Scene settingsScene = new Scene(settingsPage.getRootPane(), 800, 600); // Create a scene with the settings page, size can be adjusted
+            URL stylesheetURL = getClass().getResource("/style.css"); // Make sure the path is correct
+            if (stylesheetURL != null) {
+                settingsScene.getStylesheets().add(stylesheetURL.toExternalForm());
+            } else {
+                System.out.println("ERROR: Failed to load style.css");
+            }
             primaryStage.setScene(settingsScene); // Apply the settings scene to the primary stage
             primaryStage.setFullScreen(isFullScreen); // Set the full screen mode based on the current value
             System.out.println("Settings opened!");
