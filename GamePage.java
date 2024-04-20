@@ -12,8 +12,10 @@ public class GamePage {
     private VBox rootPane = new VBox(20); // spacing between children
     private StringProperty outputText = new SimpleStringProperty(""); // StringProperty for binding
     public String input;
+    private boolean isFullScreen;
 
-    public GamePage(MainUserInterface mainApp) {
+    public GamePage(MainUserInterface mainApp, boolean isFullScreen) {
+        this.isFullScreen = isFullScreen;
         GamePlay gameplay = new GamePlay(this);
         Thread game = new Thread(gameplay);
         game.start();
@@ -41,7 +43,10 @@ public class GamePage {
         // Quit button
         Button quitButton = new Button("Quit");
         quitButton.setId("quit-button"); // CSS ID for styling
-        quitButton.setOnAction(event -> mainApp.switchToMainPage());  // Quit the game
+        quitButton.setOnAction(e -> {
+            mainApp.switchToMainPage();
+            mainApp.setFullScreen(isFullScreen);
+        });
 
         rootPane.getChildren().addAll(outputTextArea, inputField, submitButton, quitButton);
 
