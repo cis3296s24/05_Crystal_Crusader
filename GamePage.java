@@ -5,6 +5,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
+
+import java.net.URL;
 
 public class GamePage {
     private VBox rootPane = new VBox(20); // spacing between children
@@ -17,6 +22,18 @@ public class GamePage {
         GamePlay gameplay = new GamePlay(this);
         Thread game = new Thread(gameplay);
         game.start();
+        // Load the audio file
+        URL resource = getClass().getResource("/submit.wav");
+        if (resource == null) {
+            System.out.println("File not found");
+            return; // Stop if the file isn't found
+        }
+        Media media = new Media(resource.toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setCycleCount(1); // Play the audio exactly once
+
+
+
 
         rootPane.setId("game-page"); // CSS ID for styling
 
@@ -35,6 +52,9 @@ public class GamePage {
         submitButton.setOnAction(event -> {
             input = inputField.getText();
             inputField.clear();  // Clear input field after submitting
+            mediaPlayer.stop();  // Stop any currently playing audio
+            mediaPlayer.seek(Duration.ZERO);  // Seek to the beginning
+            mediaPlayer.play(); // Start playing the audio
             gameplay.proceed();
         });
 
