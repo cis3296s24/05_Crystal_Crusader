@@ -14,5 +14,19 @@ Follow this project board to know the latest status of the project: https://gith
 - Download the latest binary from the Release section on the right on GitHub.
 - Open https://gluonhq.com/products/javafx/, download the JavaFX SDK and unzip it to a location on your computer. (Also unzip lib folder from the zip file if necessary)
 - Open the project in IntelliJ IDEA and go to File -> Project Structure -> Libraries. Click on the + sign and add the path to the lib folder in the JavaFX SDK folder. Click Apply and then OK.
-- Go to Run -> Edit Configurations. Click on the + sign and add a new Application configuration. Set the Main class to be Main and set the VM options to --module-path "path to JavaFX lib folder" --add-modules javafx.controls,javafx.fxml. Click Apply and then OK.(Remember to replace "path to JavaFX lib folder" with the actual path to the lib folder in the JavaFX SDK folder)
+- Go to Run -> Edit Configurations. Click on the + sign and add a new Application configuration. Set the Main class to be Main and set the VM options to 
+```
+--module-path "path to JavaFX lib folder"
+
+--add-modules javafx.controls,javafx.fxml
+
+--add-opens javafx.base/com.sun.javafx=ALL-UNNAMED
+
+--add-opens javafx.graphics/com.sun.glass.utils=ALL-UNNAMED
+
+--add-opens javafx.graphics/com.sun.javafx.tk=ALL-UNNAMED.
+```
+- Click Apply and then OK.(Remember to replace "path to JavaFX lib folder" with the actual path to the lib folder in the JavaFX SDK folder)
+- It should look like this:
+  ![This is a screenshot.](BuildDemo.png)
 - Click Run.
