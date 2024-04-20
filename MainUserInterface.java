@@ -22,7 +22,6 @@ public class MainUserInterface extends Application{
     private Pane mainPageRoot;
     private Scene mainScene;
     private Stage primaryStage;
-    private SharedController controller;
     private boolean isFullScreen = false;
     @Override
     public void start(Stage primaryStage) {
