@@ -10,10 +10,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.net.URL;
 
-public class MainUserInterface extends Application implements SettingsCallback {
+public class MainUserInterface extends Application{
     // Define the triangle and blink animation globally so they can be used in the setupButton method
     Polygon triangleLeft;
     Polygon triangleRight;
@@ -22,9 +21,12 @@ public class MainUserInterface extends Application implements SettingsCallback {
     private Pane mainPageRoot;
     private Scene mainScene;
     private Stage primaryStage;
+    private boolean isFullScreen = false;
     @Override
     public void start(Stage primaryStage) {
+        // Set the primary stage and title
         this.primaryStage = primaryStage;
+        primaryStage.setTitle("Crystal Crusader");
 
         // Create a Pane which allows for absolute positioning
         Pane root = new Pane();
@@ -55,7 +57,7 @@ public class MainUserInterface extends Application implements SettingsCallback {
 
         // Define actions for buttons
         startButton.setOnAction(e -> {
-            GamePage gamePage = new GamePage(this); // Create an instance of GamePage
+            GamePage gamePage = new GamePage(this, isFullScreen); // Create an instance of GamePage
             Scene gameScene = new Scene(gamePage.getRootPane(), 800, 600); // Use the GamePage's root pane
             // Loading the stylesheet
             URL stylesheetURL = getClass().getResource("/style.css"); // Make sure the path is correct
@@ -66,6 +68,7 @@ public class MainUserInterface extends Application implements SettingsCallback {
             }
 
             primaryStage.setScene(gameScene); // Switch to the game scene
+            primaryStage.setFullScreen(isFullScreen); // Set the full screen mode based on the current value
             System.out.println("Game started!");
         });
 
@@ -75,7 +78,14 @@ public class MainUserInterface extends Application implements SettingsCallback {
 
             SettingsPage settingsPage = new SettingsPage(primaryStage, this); // 'this' refers to an instance of MainUserInterface
             Scene settingsScene = new Scene(settingsPage.getRootPane(), 800, 600); // Create a scene with the settings page, size can be adjusted
+            URL stylesheetURL = getClass().getResource("/style.css"); // Make sure the path is correct
+            if (stylesheetURL != null) {
+                settingsScene.getStylesheets().add(stylesheetURL.toExternalForm());
+            } else {
+                System.out.println("ERROR: Failed to load style.css");
+            }
             primaryStage.setScene(settingsScene); // Apply the settings scene to the primary stage
+            primaryStage.setFullScreen(isFullScreen); // Set the full screen mode based on the current value
             System.out.println("Settings opened!");
         });
 
@@ -102,7 +112,7 @@ public class MainUserInterface extends Application implements SettingsCallback {
 
 
         // Setup and show the main scene
-        this.mainPageRoot = setupMainPage();
+        this.mainPageRoot = new Pane();
         this.mainScene = new Scene(root, 800, 600); // Initialize mainScene with root
         this.mainScene.getStylesheets().add("style.css"); // Load the CSS stylesheet
         primaryStage.setTitle("Crystal Crusader");
@@ -157,21 +167,14 @@ public class MainUserInterface extends Application implements SettingsCallback {
         });
         return button;
     }
-    @Override
     public void switchToMainPage() {
         primaryStage.setScene(mainScene); // Switch back to the main scene
     }
-    @Override
     public void setFullScreen(boolean fullScreen) {
-        System.out.println("Full screen requested: " + fullScreen);
-        primaryStage.setFullScreen(fullScreen);// TODO: Needs to be fixed
+        isFullScreen = fullScreen;
+        primaryStage.setFullScreen(fullScreen);
     }
-    private Pane setupMainPage() {
-        // Set up your main page layout here and return the root pane
-        Pane rootPane = new Pane();
-        // Your main page setup...
-        return rootPane;
-    }
+
     public static void main(String[] args) {
         launch(args);
     }
