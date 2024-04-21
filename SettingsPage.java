@@ -1,36 +1,45 @@
-import javafx.collections.FXCollections;
-import javafx.scene.Scene;
+import javafx.application.Platform;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class SettingsPage {
-    private Pane rootPane;
+    private VBox rootPane = new VBox(20); // spacing between children
     private Stage primaryStage;
     private MainUserInterface mainApp;
     public SettingsPage(Stage primaryStage, MainUserInterface mainApp) {
         this.primaryStage = primaryStage;
         this.mainApp = mainApp;
-        setupSettingsPage(primaryStage, mainApp);
-    }
+        rootPane.setId("settings-page"); // CSS ID for styling
+        Label titleLabel = new Label("Settings");
+        titleLabel.setId("settings-title-label"); // CSS ID for styling
 
-
-    private void setupSettingsPage(Stage primaryStage, MainUserInterface mainApp) {
-        rootPane = new Pane();
-
-
-        // Create a ComboBox for resolution selection with predefined options
+        // Initialize a ComboBox for selecting screen resolution from predefined options
         ComboBox<String> resolutionComboBox = createComboBox();
-        resolutionComboBox.getSelectionModel().select("800 x 600");
+        resolutionComboBox.setId("resolution-combo-box"); // CSS ID for styling
+
+        // Set the ComboBox to the current actual resolution used by the primaryStage
+        Platform.runLater(() -> {
+            String actualResolution = String.format("%d x %d",
+                    (int) primaryStage.getWidth(),
+                    (int) primaryStage.getHeight());
+            resolutionComboBox.getSelectionModel().select(actualResolution);
+        });
+
         Button quitButton = new Button("Quit");
-       // quitButton.getStyleClass().add("settings-button");
+        quitButton.setId("settings-quit-button"); // CSS ID for styling
 
-
-        // Create a CheckBox for toggling full screen mode
+        // Setup a CheckBox for enabling full screen mode
         CheckBox fullScreenCheckBox = createCheckBox(primaryStage);
-        // Add a listener to change the application window size based on the selected resolution
+        fullScreenCheckBox.setId("full-screen-checkbox"); // CSS ID for styling
+
+        // Define a listener to adjust the application window size based on the selected resolution
         resolutionComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
             String[] dimensions = newValue.split(" x ");
             if (dimensions.length == 2) {
@@ -38,55 +47,43 @@ public class SettingsPage {
                 int height = Integer.parseInt(dimensions[1]);
                 primaryStage.setWidth(width);
                 primaryStage.setHeight(height);
+                primaryStage.centerOnScreen();  // Ensure the stage is centered after resizing
             }
         });
 
-        // Add an action listener to the checkbox
+        // Configure the CheckBox to reflect the current full screen status and update on toggle
         fullScreenCheckBox.setSelected(primaryStage.isFullScreen());
-        fullScreenCheckBox.setOnAction(e -> mainApp.setFullScreen(fullScreenCheckBox.isSelected()));
-
-        quitButton.setLayoutX(50);
-        quitButton.setLayoutY(200);
-        quitButton.setOnAction(e ->{ 
-            mainApp.switchToMainPage();
+        fullScreenCheckBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            primaryStage.setFullScreen(newValue);
         });
 
-        rootPane.getChildren().add(resolutionComboBox);
-        rootPane.getChildren().add(fullScreenCheckBox);
-        rootPane.getChildren().add(quitButton);
+        // Position the 'Quit' button and define its behavior
 
+        quitButton.setOnAction(e -> {
+            mainApp.switchToMainPage();
+            mainApp.setFullScreen(fullScreenCheckBox.isSelected());
+        });
+
+        // Add components to the root pane
+        rootPane.getChildren().addAll(titleLabel, resolutionComboBox, fullScreenCheckBox, quitButton);
     }
 
     private static CheckBox createCheckBox(Stage primaryStage) {
         CheckBox fullScreenCheckBox = new CheckBox("Full Screen Mode");
-        fullScreenCheckBox.setLayoutX(50); // Adjust layout as needed
-        fullScreenCheckBox.setLayoutY(100); // Adjust layout as needed
-
-        // Set the checkbox to match the current full-screen status of the primary stage
         fullScreenCheckBox.setSelected(primaryStage.isFullScreen());
-
-
         return fullScreenCheckBox;
     }
 
     private static ComboBox<String> createComboBox() {
         ComboBox<String> comboBox = new ComboBox<>();
-        comboBox.getItems().addAll(
-                "800 x 600",
-                "1024 x 768",
-                "1280 x 720",
-                "1920 x 1080"
-        );
-
-        comboBox.setLayoutX(50); // Adjust layout as needed
-        comboBox.setLayoutY(50); // Adjust layout as needed
+        comboBox.getItems().addAll("800 x 600", "1024 x 768", "1280 x 720");
         return comboBox;
     }
 
 
+
+
     public Pane getRootPane() {
-        Pane newRootPane = new Pane();
-        setupSettingsPage(primaryStage, mainApp);
         return rootPane;
     }
 }
