@@ -2,21 +2,38 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
-import javafx.scene.paint.Color;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
+
+import java.net.URL;
 
 public class GamePage {
     private VBox rootPane = new VBox(20); // spacing between children
     private StringProperty outputText = new SimpleStringProperty(""); // StringProperty for binding
     public String input;
+    private boolean isFullScreen;
 
-    public GamePage(MainUserInterface mainApp) {
+    public GamePage(MainUserInterface mainApp, boolean isFullScreen) {
+        this.isFullScreen = isFullScreen;
         GamePlay gameplay = new GamePlay(this);
         Thread game = new Thread(gameplay);
         game.start();
+        // Load the audio file
+        URL resource = getClass().getResource("/submit.wav");
+        if (resource == null) {
+            System.out.println("File not found");
+            return; // Stop if the file isn't found
+        }
+        Media media = new Media(resource.toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setCycleCount(1); // Play the audio exactly once
+
+
+
 
         rootPane.setId("game-page"); // CSS ID for styling
 
@@ -31,17 +48,23 @@ public class GamePage {
 
         // Submit button
         Button submitButton = new Button("Submit");
-        submitButton.setId("submit-button"); // CSS ID for styling
+        submitButton.setId("game-submit-button"); // CSS ID for styling
         submitButton.setOnAction(event -> {
             input = inputField.getText();
             inputField.clear();  // Clear input field after submitting
+            mediaPlayer.stop();  // Stop any currently playing audio
+            mediaPlayer.seek(Duration.ZERO);  // Seek to the beginning
+            mediaPlayer.play(); // Start playing the audio
             gameplay.proceed();
         });
 
         // Quit button
         Button quitButton = new Button("Quit");
-        quitButton.setId("quit-button"); // CSS ID for styling
-        quitButton.setOnAction(event -> mainApp.switchToMainPage());  // Quit the game
+        quitButton.setId("game-quit-button"); // CSS ID for styling
+        quitButton.setOnAction(e -> {
+            mainApp.switchToMainPage();
+            mainApp.setFullScreen(isFullScreen);
+        });
 
         rootPane.getChildren().addAll(outputTextArea, inputField, submitButton, quitButton);
 

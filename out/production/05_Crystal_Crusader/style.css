@@ -1,3 +1,4 @@
+/* styles for the main window */
 .menu {
     -fx-background-color: black;
     -fx-padding: 20;
@@ -24,7 +25,7 @@
     -fx-border-style: solid;
     -fx-border-width: 0;
 }
-
+/* styles for the game page */
 #game-page {
     -fx-padding: 20;
     -fx-alignment: center;
@@ -51,8 +52,66 @@
     -fx-display-caret: true;
 }
 
-#submit-button, #quit-button {
+#game-submit-button, #game-quit-button {
     -fx-background-color: #336699;
     -fx-text-fill: white;
     -fx-font-size: 14px;
+}
+/* styles for the settings page */
+#settings-page {
+    -fx-padding: 20;
+    -fx-alignment: center;
+    -fx-background-color: black;
+}
+#settings-title-label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-font-family: "Lucida Handwriting", cursive;
+    -fx-padding: 10;
+}
+#settings-quit-button {
+    -fx-background-color: #336699;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+}
+#full-screen-checkbox {
+    -fx-font-size: 12px;
+    -fx-text-fill: white;
+}
+#full-screen-checkbox .box {
+    -fx-padding: 5;
+    -fx-border-color: #666666;
+    -fx-border-radius: 5; /* Border radius for rounded corners */
+}
+#full-screen-checkbox:hover .box {
+    -fx-background-color: #336699;
+}
+#full-screen-checkbox:selected .box {
+    -fx-background-color: #008b8b;
+    -fx-background-insets: 3; /* Insets for background to act as border */
+}
+#full-screen-checkbox:selected .mark {
+    -fx-background-color: black;
+    -fx-shape: "M0 0 L1 2 L2 0 Z";
+}
+
+#resolution-combo-box {
+    -fx-font-size: 14px;
+    -fx-background-color: #336699;
+}
+
+#resolution-combo-box .list-cell {
+    -fx-padding: 10px;
+    -fx-background-color: #336699;
+    -fx-text-fill: #333;
+}
+
+#resolution-combo-box .list-cell:filled:selected, #resolution-combo-box .list-cell:filled:selected:hover {
+    -fx-background-color: #336699;
+    -fx-text-fill: #333;
+}
+
+#resolution-combo-box .list-cell:hover {
+    -fx-background-color: black;
 }
