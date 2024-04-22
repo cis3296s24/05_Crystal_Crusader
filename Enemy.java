@@ -142,9 +142,10 @@ public class Enemy {
 
 
 
-    public static List<Enemy> initializeEnemies(List<Item> items) {
+    public static List<Enemy> initializeEnemies() {
+
         //note: I've changed the structure a little bit, you can call this function by creating a List<Item> var and assigning it to List<Enemy> initializeEnemies(..)
-        List<Item> itemsList = Item.initializeItems();
+        List<Item> items = Item.initializeItems();
         List<Enemy> enemies = new ArrayList<>();
 
         if(items.size() < 5) {
