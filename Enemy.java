@@ -141,6 +141,7 @@ public class Enemy {
 
 
 
+
     public static List<Enemy> initializeEnemies(List<Item> items) {
         //note: I've changed the structure a little bit, you can call this function by creating a List<Item> var and assigning it to List<Enemy> initializeEnemies(..)
         List<Item> itemsList = Item.initializeItems();
@@ -159,7 +160,6 @@ public class Enemy {
         enemies.add(new Enemy("Zombie", 50, 8, 10, 1, 10, 20, false, zombie_drop, false));
         enemies.add(new Enemy("Skeleton", 40, 12, 8, 3, 12, 15, false, skeleton_drop, false));
         enemies.add(new Enemy("Dragon", 100, 20, 15, 5, 30, 50, false, dragon_drop, false));
-
         return enemies;
 
     }

@@ -84,10 +84,9 @@ public class Item {
 
     public static List<Item> initializeItems() {
         //function for adding items
-
         List<Item> items = new ArrayList<>();
         //item id, item health, attack pwr numbers are placeholders for now
-        items.add(new Item(" Potion", "Restores some amount of health.", 101, 50, 0, Arrays.asList("Heal")));
+        items.add(new Item("Potion", "Restores some amount of health.", 101, 50, 0, Arrays.asList("Heal")));
         items.add(new Item("Shield", "Provides temporary protection.", 102, 0, 0, Arrays.asList("Increase Defense")));
         items.add(new Item("Sword", "A sharp blade that deals extra damage.", 103, 0, 20, Arrays.asList("Increase Attack")));
         items.add(new Item("Speed Boots", "Increases the player's speed.", 104, 0, 0, Arrays.asList("Increase Speed")));
@@ -95,6 +94,7 @@ public class Item {
 
         return items;
     }
+
 
     public List<String> getAbilities() {
         return abilities;
