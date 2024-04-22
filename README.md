@@ -24,7 +24,7 @@ Follow this project board to know the latest status of the project: https://gith
 
 --add-opens javafx.graphics/com.sun.glass.utils=ALL-UNNAMED
 
---add-opens javafx.graphics/com.sun.javafx.tk=ALL-UNNAMED.
+--add-opens javafx.graphics/com.sun.javafx.tk=ALL-UNNAMED
 ```
 - Click Apply and then OK.(Remember to replace "path to JavaFX lib folder" with the actual path to the lib folder in the JavaFX SDK folder)
 - It should look like this:
