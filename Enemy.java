@@ -140,20 +140,22 @@ public class Enemy {
     }
 
 
-/*
+
     public static List<Enemy> initializeEnemies() {
         List<Enemy> enemies = new ArrayList<>();
 
         // Note: These values are only temporary placeholders only. I will fix it later
         // Note: The 'false' parameter is for the 'isBoss' boolean flag.
-        enemies.add(new Enemy("Goblin", 30, 10, 5, 2, 15, 10, false, Arrays.asList("gold coin", "small dagger"), false));
-        enemies.add(new Enemy("Zombie", 50, 8, 10, 1, 10, 20, false, Arrays.asList("rotten flesh", "bone"), false));
-        enemies.add(new Enemy("Skeleton", 40, 12, 8, 3, 12, 15, false, Arrays.asList("bone", "rusty sword"), false));
-        enemies.add(new Enemy("Dragon", 100, 20, 15, 5, 30, 50, false, Arrays.asList("dragon scale", "treasure"), false));
+        //enemies.add(new Enemy("Goblin", 30, 10, 5, 2, 15, 10, false, null, false));
+
+        //try to keep this method and these enemies please
+        enemies.add(new Enemy("Zombie", 50, 8, 10, 1, 10, 20, false, null, false));
+        enemies.add(new Enemy("Skeleton", 40, 12, 8, 3, 12, 15, false, null, false));
+        enemies.add(new Enemy("Dragon", 100, 20, 15, 5, 30, 50, false, null, false));
 
         return enemies;
     }
-*/
+
 
     @Override
 

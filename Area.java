@@ -47,7 +47,7 @@ public class Area{
         String shortDescription = "";
         switch(this.getName()) {
             case "Cragrock Keep":
-                shortDescription = "The gates of Cragrock Keep loom before you, cloaked in an unnatural fog. A chilling silence hangs in the air,\n " +
+                shortDescription = "The gates of Cragrock Keep loom before you, cloaked in an unnatural fog. A chilling silence hangs in the air, " +
                         "broken only by your determined steps.\n";
                 break;
             //other area names;
@@ -59,40 +59,78 @@ public class Area{
         String detailedDescription = "";
         switch (this.getName()) {
             case "Cragrock Keep":
-                String itemDescription = "";
-                if (!getAreaItems().isEmpty()) {
-                    Item firstItem = getAreaItems().get(0);
-                    itemDescription = firstItem.getName();
-                }
-
-                String enemyDescription = "";
-                if (!getEnemies().isEmpty()) {
-                    StringBuilder sb = new StringBuilder();
-                    for (Enemy enemy : getEnemies()) {
-                        if (sb.length() > 0) sb.append(", ");
-                        sb.append(enemy.getName());
-                    }
-                    enemyDescription = sb.toString();
-                }
-
-                detailedDescription = "As you venture into the maw of Cragrock Keep, the air grows dense with a palpable darkness that seems to pulse with the keep's ancient\n" +
-                        "and malevolent history. A few paces in, your eyes catch a glint of a" +  itemDescription + ". With cautious reverence, \n " +
-                        "you pick it up, knowing it could be of use later on.\n\n" +
-                        "A cacophony of eerie sounds begins to swell around you. There's the scrape of bone on stone, chillingly rhythmic. This is mingled\n" +
-                        "with a low, guttural growl, the kind that could only belong to a creature corrupted beyond its natural form. A sudden, fleeting \n" +
-                        "warmth washes over you, as if a great flame has briefly flickered to life and then died down. Then it hits you, you finally put\n" +
-                        "it together—these sounds must be coming from" + enemyDescription + "They must be protecting the crystal, lurking in the darkness, each \n" +
-                        "creature a sentinel set by the sorcerer to thwart any who dare to reclaim Eldoria's lost light\n";
+                detailedDescription = "As you venture into the maw of Cragrock Keep, the air grows dense with a palpable darkness that " +
+                        "seems to pulse with the keep's ancient and dark history. Just a few paces in, your eyes catch a glint of something unusual—a skeletal figure, " +
+                        "half-buried in the debris. Grasping your small sword tightly, you steel your nerves and proceed deeper into the castle." +
+                        " A chatter of eerie sounds begins to swell around you. The chillingly rhythmic scrape of bone on stone mingles with a low, jarring growl—the " +
+                        "kind that could only belong to a creature corrupted beyond its natural form. Suddenly, a fleeting warmth washes over you, as if a great flame has " +
+                        "briefly flickered to life and then died down. Yet, undeterred, you continue on. The crystal must be reclaimed, not just " +
+                        "for your own sake, but for the fate of Eldoria itself.\n(Click submit to continue)";
                 break;
-
-            // Add other cases for different areas as necessary
         }
         return detailedDescription;
     }
 
+    public String interactWithArea(){
+        String interaction = "";
+        switch (this.getName()){
+            case "Cragrock Keep":
+                String items = "";
+                List<Item> itemList = getAreaItems();
+                if (!itemList.isEmpty()) {
+                    StringBuilder sb = new StringBuilder();
+                    int size = itemList.size();
+                    for (int i = 0; i < size; i++) {
+                        if (i > 0) {
+                            if (i == size - 1) {
+                                sb.append(", and ");
+                            } else {
+                                sb.append(", ");
+                            }
+                        }
+                        sb.append(itemList.get(i).getName());
+                    }
+                    items = sb.toString();
+                }
+
+                String enemies = "";
+                List<Enemy> enemyList = getEnemies();
+                if (!getEnemies().isEmpty()) {
+                    StringBuilder sb = new StringBuilder();
+                    int size = enemyList.size();
+                    for (int i = 0; i < size; i++) {
+                        if (i > 0) {
+                            if (i == size - 1) {
+                                sb.append(", and ");
+                            } else {
+                                sb.append(", ");
+                            }
+                        }
+                        sb.append(enemyList.get(i).getName());
+                    }
+                    enemies = sb.toString();
+                }
+                interaction = "As you venture deeper into the shadows of Cragrock Keep, a ghostly figure begins to manifest " +
+                        "before you. It's barely visible at first, like a wisp of smoke caught in the dim light, but gradually, " +
+                        "the figure becomes more distinct, revealing a knight clad in spectral armor.\n\n" +
+                        "'Brave soul, heed my words,' the apparition speaks with a voice that resonates through the cold air. " +
+                        "'I am Gustus, once a guardian of the Crystal. My failure has condemned me to this ethereal existence. " +
+                        "But you, you have the power to set things right.'\n\n" +
+                        "You listen intently as Gustus continues, 'To reclaim the crystal and restore balance to Eldoria, you " +
+                        "must overcome formidable guardians left by Valrak. A " + enemies + ".’\n\n" +
+                        "His form flickering like a candle in the wind, Gaius imparts one last piece of advice, 'Within this " +
+                        "castle lie artifacts of great power. A " + items + ". You must seek them out, they are essential to overcoming " +
+                        "the foes that await you.’. With that, the figure of Gaius dissolves into the air, leaving behind a trail " +
+                        "of mist that leads you onward.\n(Click submit to continue)";
+                break;
+
+        }
+        return interaction;
+    }
+
     public static List<Area> initializeAreas() {
         List<Area> areas = new ArrayList();
-        areas.add(new Area("Cragrock Keep", true, true, false, true, null, null));
+        areas.add(new Area("Cragrock Keep", true, true, true, true, Item.initializeItems(), Enemy.initializeEnemies()));
         return areas;
     }
 
