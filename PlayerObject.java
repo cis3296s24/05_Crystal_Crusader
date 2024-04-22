@@ -22,23 +22,22 @@ public class PlayerObject {
     private String inputText;
     private boolean readyToProceed = false;  // Flag to control flow
 
+    public final GamePlay game;
 
-    public PlayerObject(String name) {
+    public int level;
+
+
+    public PlayerObject(String name, GamePlay game) {
         this.name = name;
-        this.healthPoints = 100; //random number - we can change it later
+        this.healthPoints = 20; //random number - we can change it later
         this.currentHealth = healthPoints;
         this.attack = 5;
         this.defense = 5;
         this.speed = 5;
         this.inventory = new ArrayList<>();
         this.skillPoints = 0; //starting experience points (can increment in program)
-    }
-    public static void main(String[]args) {
-        //main class
-        PlayerObject player = new PlayerObject(""); //empty string for now
-
-        // call other methods here later and then display class
-        player.displayStatus(); //will display name, points etc
+        this.game = game;
+        level = 1;
     }
     public void displayStatus() {
         System.out.println("player name: " + name);
@@ -98,8 +97,9 @@ public class PlayerObject {
     //returns 0 if player ran away, 1 if player won, and 2 if player lost
     public int battle(Enemy enemy, GamePage UI){
         Platform.runLater(UI.runnableSetOutput("You encountered a " + enemy.getName() + "!!\n(Click submit to continue)"));
-        waitForInput();
-
+        System.out.println("check");
+        game.waitForInput();
+        System.out.println("check");
         Random rand = new Random();
 //        Scanner scan = new Scanner(System.in);
         boolean battleOver = false;
@@ -112,14 +112,14 @@ public class PlayerObject {
                 int playerChoice = 0;
                 while(playerChoice != 1 && playerChoice != 2 && playerChoice != 3){
                     Platform.runLater(UI.runnableSetOutput("What will you do?\n1. Attack\n2. Item\n3. Run"));
-                    waitForInput();
+                    game.waitForInput();
 
 //                    playerChoice = scan.nextInt();
                     playerChoice = Integer.parseInt(UI.input);
                     switch(playerChoice){
                         case 1:
                             Platform.runLater(UI.runnableSetOutput("You attack with your " + equippedWeapon.getName() + "!\n(Click submit to continue)"));
-                            waitForInput();
+                            game.waitForInput();
                             int enemyDefense = enemy.getDefense();
                             chance = rand.nextInt(19);
                             chance++;
@@ -136,17 +136,18 @@ public class PlayerObject {
                             double damage = attackPercent * equippedWeapon.getAttackPwr();
                             int convertedDamage = (int) damage;
                             Platform.runLater(UI.runnableSetOutput("You did " + convertedDamage + " damage!!\n(Click submit to continue)"));
-                            waitForInput();
+                            game.waitForInput();
                             enemy.takeDamage(convertedDamage);
                             if(enemy.checkIfDefeated()){
                                 battleOver = true;
                             }
+                            break;
                         case 2:
                             int itemChoice = 0;
                             List<Item> battleItems = getBattleItems();
                             if(battleItems.size() == 0){
                                 Platform.runLater(UI.runnableSetOutput("You dont have any items you can use right now\n(CLick submit to continue)"));
-                                waitForInput();
+                                game.waitForInput();
                                 playerChoice = 0;
                             }else{
                                 while(itemChoice == 0){
@@ -158,41 +159,41 @@ public class PlayerObject {
                                     itemList += (battleItems.size() + 1) + ": Back";
 //                                    itemChoice = scan.nextInt();
                                     Platform.runLater(UI.runnableSetOutput(itemList));
-                                    waitForInput();
+                                    game.waitForInput();
                                     itemChoice = Integer.parseInt(UI.input);
                                     if(itemChoice != 0 && itemChoice < battleItems.size() + 1){
-                                        battleItems.get(itemChoice).use(this, enemy);
+                                        Platform.runLater(UI.runnableSetOutput(battleItems.get(itemChoice - 1).use(this, enemy)));
+                                        game.waitForInput();
                                     }else if(itemChoice == battleItems.size() + 1){
                                         playerChoice = 0;
                                     }else{
                                         Platform.runLater(UI.runnableSetOutput("That's not an option\n(Click submit to continue)"));
-                                        waitForInput();
+                                        game.waitForInput();
                                         itemChoice = 0;
                                     }
                                 }
                             }
+                            break;
                         case 3:
                             if(enemy.isBoss){
                                 Platform.runLater(UI.runnableSetOutput("You can't run from this fight\n(Click submit to continue)"));
-                                waitForInput();
+                                game.waitForInput();
                                 playerChoice = 0;
                             }else{
                                 Platform.runLater(UI.runnableSetOutput("You try to run away!!\n(Click submit to continue)"));
-                                waitForInput();
-                                chance = rand.nextInt(1);
-                                if(chance == 1){
-                                    Platform.runLater(UI.runnableSetOutput("You got away!!\n(Click submit to continue)"));
-                                    waitForInput();
+                                game.waitForInput();
+                                chance = rand.nextInt(10);
+                                if(chance <= 7){
                                     battleOver = true;
                                 }else{
                                     Platform.runLater(UI.runnableSetOutput("You couldn't get away!!\n(Click submit to continue)"));
-                                    waitForInput();
+                                    game.waitForInput();
                                 }
                             }
                             break;
                         default:
                             Platform.runLater(UI.runnableSetOutput("That's not an option!\n(Click submit to continue)"));
-                            waitForInput();
+                            game.waitForInput();
                             break;
                     }
                 }
@@ -205,7 +206,7 @@ public class PlayerObject {
 
                 //enemy turn
                 Platform.runLater(UI.runnableSetOutput("The " + enemy.getName() + " attacks!!\n(Click submit to continue)"));
-                waitForInput();
+                game.waitForInput();
                 chance = rand.nextInt(19) + 1;
                 if(enemy.getAttack() >= defense * 2){
                     chance += 4;
@@ -221,10 +222,10 @@ public class PlayerObject {
                 int convertedDamage = (int) damage;
                 System.out.println("You took " + convertedDamage + " damage!!");
                 Platform.runLater(UI.runnableSetOutput("You took " + convertedDamage + " damage!!\n(Click submit to continue)"));
-                waitForInput();
+                game.waitForInput();
                 setCurrentHealth(getCurrentHealth() - convertedDamage);
 
-                if(getCurrentHealth() == 0){
+                if(getCurrentHealth() <= 0){
                     battleOver = true;
                 }
             }else{
@@ -232,7 +233,7 @@ public class PlayerObject {
                 //enemy turn
 
                 Platform.runLater(UI.runnableSetOutput("The " + enemy.getName() + " attacks!!\n(Click submit to continue)"));
-                waitForInput();
+                game.waitForInput();
                 chance = rand.nextInt(19) + 1;
                 if(enemy.getAttack() >= defense * 2){
                     chance += 4;
@@ -248,7 +249,7 @@ public class PlayerObject {
                 int convertedDamage = (int) damage;
                 System.out.println("You took " + convertedDamage + " damage!!");
                 Platform.runLater(UI.runnableSetOutput("You took " + convertedDamage + " damage!!\n(Click submit to continue)"));
-                waitForInput();
+                game.waitForInput();
                 setCurrentHealth(getCurrentHealth() - convertedDamage);
 
                 if(getCurrentHealth() == 0){
@@ -266,14 +267,14 @@ public class PlayerObject {
                 int playerChoice = 0;
                 while(playerChoice != 1 && playerChoice != 2 && playerChoice != 3){
                     Platform.runLater(UI.runnableSetOutput("What will you do?\n1. Attack\n2. Item\n3. Run"));
-                    waitForInput();
+                    game.waitForInput();
 
 //                    playerChoice = scan.nextInt();
                     playerChoice = Integer.parseInt(UI.input);
                     switch(playerChoice){
                         case 1:
                             Platform.runLater(UI.runnableSetOutput("You attack with your " + equippedWeapon.getName() + "!\n(Click submit to continue)"));
-                            waitForInput();
+                            game.waitForInput();
                             int enemyDefense = enemy.getDefense();
                             chance = rand.nextInt(19);
                             chance++;
@@ -290,17 +291,18 @@ public class PlayerObject {
                             damage = attackPercent * equippedWeapon.getAttackPwr();
                             convertedDamage = (int) damage;
                             Platform.runLater(UI.runnableSetOutput("You did " + convertedDamage + " damage!!\n(Click submit to continue)"));
-                            waitForInput();
+                            game.waitForInput();
                             enemy.takeDamage(convertedDamage);
                             if(enemy.checkIfDefeated()){
                                 battleOver = true;
                             }
+                            break;
                         case 2:
                             int itemChoice = 0;
                             List<Item> battleItems = getBattleItems();
                             if(battleItems.size() == 0){
                                 Platform.runLater(UI.runnableSetOutput("You dont have any items you can use right now\n(CLick submit to continue)"));
-                                waitForInput();
+                                game.waitForInput();
                                 playerChoice = 0;
                             }else{
                                 while(itemChoice == 0){
@@ -312,41 +314,41 @@ public class PlayerObject {
                                     itemList += (battleItems.size() + 1) + ": Back";
 //                                    itemChoice = scan.nextInt();
                                     Platform.runLater(UI.runnableSetOutput(itemList));
-                                    waitForInput();
+                                    game.waitForInput();
                                     itemChoice = Integer.parseInt(UI.input);
                                     if(itemChoice != 0 && itemChoice < battleItems.size() + 1){
-                                        battleItems.get(itemChoice).use(this, enemy);
+                                        Platform.runLater(UI.runnableSetOutput(battleItems.get(itemChoice - 1).use(this, enemy)));
+                                        game.waitForInput();
                                     }else if(itemChoice == battleItems.size() + 1){
                                         playerChoice = 0;
                                     }else{
                                         Platform.runLater(UI.runnableSetOutput("That's not an option\n(Click submit to continue)"));
-                                        waitForInput();
+                                        game.waitForInput();
                                         itemChoice = 0;
                                     }
                                 }
                             }
+                            break;
                         case 3:
                             if(enemy.isBoss){
                                 Platform.runLater(UI.runnableSetOutput("You can't run from this fight\n(Click submit to continue)"));
-                                waitForInput();
+                                game.waitForInput();
                                 playerChoice = 0;
                             }else{
                                 Platform.runLater(UI.runnableSetOutput("You try to run away!!\n(Click submit to continue)"));
-                                waitForInput();
-                                chance = rand.nextInt(2);
-                                if(chance == 1){
-                                    Platform.runLater(UI.runnableSetOutput("You got away!!\n(Click submit to continue)"));
-                                    waitForInput();
+                                game.waitForInput();
+                                chance = rand.nextInt(10);
+                                if(chance <= 7){
                                     battleOver = true;
                                 }else{
                                     Platform.runLater(UI.runnableSetOutput("You couldn't get away!!\n(Click submit to continue)"));
-                                    waitForInput();
+                                    game.waitForInput();
                                 }
                             }
                             break;
                         default:
                             Platform.runLater(UI.runnableSetOutput("That's not an option!\n(Click submit to continue)"));
-                            waitForInput();
+                            game.waitForInput();
                             break;
                     }
 
@@ -354,24 +356,24 @@ public class PlayerObject {
             }
         }
 
-        if(currentHealth == 0){
+        if(enemy.getCurrentHealth() <= 0){
             Platform.runLater(UI.runnableSetOutput("You won!!\nYou got " + enemy.getXpWorth() + " exp\n(Click submit to continue)"));
-            waitForInput();
+            game.waitForInput();
             skillPoints += enemy.getXpWorth();
             int rewardChance = 0;
             if(enemy.getItemDrops().size() > 0){
-                rewardChance = rand.nextInt(enemy.getItemDrops().size() + 1);
+                rewardChance = rand.nextInt(enemy.getItemDrops().size());
             }
             Item reward = enemy.getItemDrops().get(rewardChance);
             Platform.runLater(UI.runnableSetOutput("You found a " + reward.getName() + "\n(Click submit to continue)"));
-            waitForInput();
+            game.waitForInput();
             inventory.add(reward);
             return 2;
-        }else if (enemy.getCurrentHealth() == 0){
+        }else if (currentHealth <= 0){
             return 1;
         }else{
             Platform.runLater(UI.runnableSetOutput("You got away safely!\n(Click submit to continue)"));
-            waitForInput();
+            game.waitForInput();
             return 0;
         }
     }
@@ -396,22 +398,6 @@ public class PlayerObject {
         return weapons;
     }
 
-    public void waitForInput()
-    {
-        synchronized (this) {
-            while (!readyToProceed) {
-                try {
-                    wait();  // Call wait() on the instance 'lock', not 'Thread' or statically
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                    System.out.println("Game was interrupted unexpectedly");
-                    // Optionally handle the interrupt according to your needs
-                }
-            }
-        }
-        readyToProceed = false;  // Reset the flag for the next round
-    }
-
     // Adds health to the player up to their maximum health points.
     /// preet functions for implementing use() function in item.java
     public void heal(int amount) {
@@ -433,6 +419,41 @@ public class PlayerObject {
     public void increaseSpeed(int amount) {
         this.speed += amount;
         System.out.println(this.name + " increases speed by " + amount);
+    }
+
+    public void levelUp(GamePage UI){
+        if(skillPoints >= level * 10){
+            skillPoints -= level * 10;
+            level++;
+            int playerChoice = 0;
+            while(playerChoice == 0) {
+                Platform.runLater(UI.runnableSetOutput("Level up!!\nChoose a stat to increase:\n1. attack\n2. defense\n3. speed"));
+                game.waitForInput();
+                playerChoice = Integer.parseInt(UI.input);
+                switch(playerChoice){
+                    case 1:
+                        increaseAttack(5);
+                        Platform.runLater(UI.runnableSetOutput("Your attack increased!"));
+                        game.waitForInput();
+                        break;
+                    case 2:
+                        increaseDefense(5);
+                        Platform.runLater(UI.runnableSetOutput("Your defense increased!"));
+                        game.waitForInput();
+                        break;
+                    case 3:
+                        increaseSpeed(5);
+                        Platform.runLater(UI.runnableSetOutput("Your speed increased!"));
+                        game.waitForInput();
+                        break;
+                    default:
+                        Platform.runLater(UI.runnableSetOutput("That's not an option."));
+                        playerChoice = 0;
+                        game.waitForInput();
+                        break;
+                }
+            }
+        }
     }
 
 
