@@ -141,19 +141,27 @@ public class Enemy {
 
 
 
-    public static List<Enemy> initializeEnemies() {
+
+    public static List<Enemy> initializeEnemies(List<Item> items) {
+        //note: I've changed the structure a little bit, you can call this function by creating a List<Item> var and assigning it to List<Enemy> initializeEnemies(..)
+        List<Item> itemsList = Item.initializeItems();
         List<Enemy> enemies = new ArrayList<>();
 
-        // Note: These values are only temporary placeholders only. I will fix it later
-        // Note: The 'false' parameter is for the 'isBoss' boolean flag.
-        //enemies.add(new Enemy("Goblin", 30, 10, 5, 2, 15, 10, false, null, false));
+        if(items.size() < 5) {
+            throw new IllegalStateException("Insufficient items to initialize enemies.");
+        }
+        //items associated with the enemy
+        List<Item> goblin_drop = Arrays.asList(items.get(0), items.get(1));
+        List<Item> zombie_drop = Arrays.asList(items.get(2), items.get(3));
+        List<Item> skeleton_drop = Arrays.asList(items.get(4));
+        List<Item> dragon_drop = Arrays.asList(items.get(0), items.get(4));
 
-        //try to keep this method and these enemies please
-        enemies.add(new Enemy("Zombie", 50, 8, 10, 1, 10, 20, false, null, false));
-        enemies.add(new Enemy("Skeleton", 40, 12, 8, 3, 12, 15, false, null, false));
-        enemies.add(new Enemy("Dragon", 100, 20, 15, 5, 30, 50, false, null, false));
-
+        enemies.add(new Enemy("Goblin", 30, 10, 5, 2, 15, 10, false, goblin_drop, false));
+        enemies.add(new Enemy("Zombie", 50, 8, 10, 1, 10, 20, false, zombie_drop, false));
+        enemies.add(new Enemy("Skeleton", 40, 12, 8, 3, 12, 15, false, skeleton_drop, false));
+        enemies.add(new Enemy("Dragon", 100, 20, 15, 5, 30, 50, false, dragon_drop, false));
         return enemies;
+
     }
 
 

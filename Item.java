@@ -3,7 +3,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Item {
-
     private String name;
     private String description;
     private int itemID; // be able to distinguish between duplicate items
@@ -13,6 +12,22 @@ public class Item {
     private List<String> abilities;
     private int potion; //item
 
+    private boolean readyToProceed = false;  // Flag to control flow
+    public void waitForInput()
+    {
+        synchronized (this) {
+            while (!readyToProceed) {
+                try {
+                    wait();  // Call wait() on the instance 'lock', not 'Thread' or statically
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    System.out.println("Game was interrupted unexpectedly");
+                    // Optionally handle the interrupt according to your needs
+                }
+            }
+        }
+        readyToProceed = false;  // Reset the flag for the next round
+    }
     public Item(String name, String description, int itemID, int itemHealth, int attackPwr, List<String> abilities) {
         this.name = name;
         this.description = description;
@@ -85,37 +100,39 @@ public class Item {
         return abilities;
     }
 
-    public void use(PlayerObject player, Enemy enemy) {
+    public String use(PlayerObject player, Enemy enemy) {
         //have a series of if() statements checking the name of the item and doing the effect for that one
         //is passed the player and enemy in the fight so it can manipulate their stats if needed
         //(Example: healing, raising attack, defense, or speed, etc)
 
+        //replace sout with platform.runlater
         for (String ability : abilities) {
             switch (ability.toLowerCase()) {
                 case "heal": // Associated with the Potion
                     player.heal(itemHealth); // Assuming a heal method exists that adds health up to max health
-                    System.out.println(player.getName() + " uses " + name + " and recovers " + itemHealth + " health points.");
-                    break;
+                    return player.getName() + " uses " + name + " and recovers " + itemHealth + " health points.";
+
                 case "increase defense": // Associated with the Shield
                     player.increaseDefense(5); // Assuming method that temporarily increases player defense
-                    System.out.println(player.getName() + " uses " + name + " to increase defense.");
-                    break;
+                    return player.getName() + " uses " + name + " to increase defense.";
+
                 case "increase attack": // Associated with the Sword
                     player.increaseAttack(10); // Assuming method that temporarily increases player attack
-                    System.out.println(player.getName() + " uses " + name + " to increase attack power.");
-                    break;
+                    return player.getName() + " uses " + name + " to increase attack power.";
+
                 case "increase speed": // Associated with the Speed Boots
                     player.increaseSpeed(5); // Assuming a method that temporarily increases speed
-                    System.out.println(player.getName() + " uses " + name + " to increase speed.");
-                    break;
+                    return player.getName() + " uses " + name + " to increase speed.";
+
                 case "decrease enemy defense": // Associated with the Weakening Dagger
                     enemy.decreaseDefense(5); // Assuming method that temporarily decreases enemy defense
-                    System.out.println(player.getName() + " uses " + name + " to decrease " + enemy.getName() + "'s defense.");
-                    break;
+                    return player.getName() + " uses " + name + " to decrease " + enemy.getName() + "'s defense.";
+
                 default:
-                    System.out.println(name + " does not seem to have any effect.");
-                    break;
+                    return name + "does not have any effect";
+
             }
         }
+        return "invalid item ability";
     }
 }
