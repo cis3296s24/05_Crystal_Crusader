@@ -52,7 +52,7 @@ public class GamePlay implements Runnable{
     public void run(){
         UI.setOutput("Welcome to Crystal Crusader!!\n(Click submit to continue)");
         waitForInput();
-        PlayerObject player = new PlayerObject("Hero");
+        PlayerObject player = new PlayerObject("Hero", this);
         Item basicSword = new Item("Small Sword", "A basic sword, not very strong", 1, 100, 10, null);
         player.inventory.add(basicSword);
         player.equippedWeapon = basicSword;
@@ -100,19 +100,21 @@ public class GamePlay implements Runnable{
                     break;
                 case "3": //Here's the battle option. Idk how battle works that well.
                     if (currentArea.hasEnemies()){ //method I added in my area class
-                        Enemy enemy = currentArea.getEnemies().get(0); //take first enemy (initalizeEnemies assigns all the enemies to one area currently)
+                        Random rand = new Random();
+                        Enemy enemy = currentArea.getEnemies().get(rand.nextInt(currentArea.getEnemies().size() - 1)); //take first enemy (initalizeEnemies assigns all the enemies to one area currently)
                         int result = player.battle(enemy, UI);
                         if (result == 1) {
                             Platform.runLater(UI.runnableSetOutput("You were defeated...")); //I think the battle method already has print statements
                             gameRunning = false; //end game if u loose I assume
                         } else if (result == 2) {
                             Platform.runLater(UI.runnableSetOutput("You won the battle!"));
-
+                            waitForInput();
+                            player.levelUp(UI);
                         }
                     } else {
                         Platform.runLater(UI.runnableSetOutput("No enemies are here to fight."));
+                        waitForInput();
                     }
-                    waitForInput();
                     break;
                 case "4":
                     int itemChoice = 0;

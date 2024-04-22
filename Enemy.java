@@ -157,10 +157,10 @@ public class Enemy {
         List<Item> skeleton_drop = Arrays.asList(items.get(4));
         List<Item> dragon_drop = Arrays.asList(items.get(0), items.get(4));
 
-        enemies.add(new Enemy("Goblin", 30, 10, 5, 2, 15, 10, false, goblin_drop, false));
-        enemies.add(new Enemy("Zombie", 50, 8, 10, 1, 10, 20, false, zombie_drop, false));
-        enemies.add(new Enemy("Skeleton", 40, 12, 8, 3, 12, 15, false, skeleton_drop, false));
-        enemies.add(new Enemy("Dragon", 100, 20, 15, 5, 30, 50, false, dragon_drop, false));
+        enemies.add(new Enemy("Goblin", 10, 5, 3, 2, 4, 10, false, goblin_drop, false));
+        enemies.add(new Enemy("Zombie", 15, 8, 10, 1, 6, 20, false, zombie_drop, false));
+        enemies.add(new Enemy("Skeleton", 20, 12, 8, 3, 8, 30, false, skeleton_drop, false));
+        enemies.add(new Enemy("Dragon", 40, 20, 15, 5, 10, 40, false, dragon_drop, false));
         return enemies;
 
     }

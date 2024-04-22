@@ -88,7 +88,7 @@ public class Item {
         //item id, item health, attack pwr numbers are placeholders for now
         items.add(new Item("Potion", "Restores some amount of health.", 101, 50, 0, Arrays.asList("Heal")));
         items.add(new Item("Shield", "Provides temporary protection.", 102, 0, 0, Arrays.asList("Increase Defense")));
-        items.add(new Item("Sword", "A sharp blade that deals extra damage.", 103, 0, 20, Arrays.asList("Increase Attack")));
+        items.add(new Item("Shining Sword", "A sharp blade that deals extra damage.", 103, 0, 20, Arrays.asList("Increase Attack")));
         items.add(new Item("Speed Boots", "Increases the player's speed.", 104, 0, 0, Arrays.asList("Increase Speed")));
         items.add(new Item("Weakening Dagger", "Lowers the enemy's defense.", 105, 0, 0, Arrays.asList("Decrease Enemy Defense")));
 
