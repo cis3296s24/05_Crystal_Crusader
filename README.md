@@ -30,3 +30,8 @@ Follow this project board to know the latest status of the project: https://gith
 - It should look like this:
   ![This is a screenshot.](BuildDemo.png)
 - Click Run.
+### Run with .exe
+- Download Crystal_Crusader.exe
+- Open https://gluonhq.com/products/javafx/, download the JavaFX SDK(version 22) and unzip it to a location on your computer. (Also unzip lib folder from the zip file if necessary)
+- Name your JavaFX folder as javafx-sdk-22 if necessary
+- Keep your JavaFx folder and Crystal_Crusader.exe in the same directory, open Crystal_Crusader.exe.
